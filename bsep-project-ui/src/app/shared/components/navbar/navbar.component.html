@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+  <button mat-button class="menu-button" [matMenuTriggerFor]="adminMenu">
+    Admin
+  </button>
+  <mat-menu #adminMenu="matMenu">
+    <button mat-menu-item>Placeholder</button>
+  </mat-menu>
+
+  <button mat-button class="menu-button" [matMenuTriggerFor]="userMenu">
+    User
+  </button>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item [routerLink]="['user/csr-request']">
+      Zahtev za sertifikat
+    </button>
+  </mat-menu>
+</mat-toolbar>

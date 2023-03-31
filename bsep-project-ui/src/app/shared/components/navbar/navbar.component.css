@@ -1,0 +1,20 @@
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  display: flex;
+  gap: 16px;
+}
+
+.menu-button {
+  font-size: 1.1em;
+  transition-duration: .2s
+}
+.menu-button:hover{
+  transform: scale(1.1);
+  transition-duration: .2s
+}
+
+.mat-menu-item{
+  font-size: 1.2em
+}
