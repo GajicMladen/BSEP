@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CsrFormComponent } from '../shared/components/csr-form/csr-form.component';
+import { CsrListViewComponent } from './components/csr-list-view/csr-list-view.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'csr-request',
+    redirectTo: 'csr-pending',
   },
-  { path: 'csr-request', component: CsrFormComponent },
+  {
+    path: 'csr-pending',
+    component: CsrListViewComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class UserRoutingModule {}
+export class AdminRoutingModule {}

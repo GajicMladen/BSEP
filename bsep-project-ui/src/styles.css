@@ -1,4 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Message Styles -----------------------------------------------------------------------------------*/
+
+.success {
+  background-color: green !important;
+  color: white !important;
+}
+
+.error {
+  background-color: red !important;
+  color: white !important;
+}
+
+.info {
+  background-color: rgb(15, 93, 238) !important;
+  color: white !important;
+}
+
+.warning {
+  background-color: rgb(192, 126, 2) !important;
+  color: white !important;
+}
+
+/* Message Styles -----------------------------------------------------------------------------------*/

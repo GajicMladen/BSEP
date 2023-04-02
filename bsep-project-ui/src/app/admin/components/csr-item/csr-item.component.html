@@ -1,0 +1,29 @@
+<mat-card class="item">
+  <!-- <h1>{{ csrRequest.email }}</h1> -->
+  <h1>mail@mail.com</h1>
+  <div class="actions">
+    <fa-icon
+      [icon]="faMagnifyingGlass"
+      class="fa-3x"
+      style="color: darkslategray"
+      matTooltip="Pregled zahteva"
+      (click)="openPreviewDialog(false)"
+    >
+    </fa-icon>
+    <fa-icon
+      [icon]="faCheck"
+      class="fa-3x"
+      style="color: darkgreen"
+      matTooltip="Prihvati zahtev"
+      (click)="openPreviewDialog(true)"
+    >
+    </fa-icon>
+    <fa-icon
+      [icon]="faX"
+      class="fa-3x"
+      style="color: darkred"
+      matTooltip="Odbaci zahtev"
+    >
+    </fa-icon>
+  </div>
+</mat-card>

@@ -1,0 +1,22 @@
+.item {
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  gap: 50px;
+  justify-content: flex-end;
+}
+
+fa-icon {
+  transition-duration: .2s
+}
+
+fa-icon:hover {
+  transform: scale(1.2);
+  transition-duration: .2s;
+  cursor: pointer;
+}

@@ -3,7 +3,9 @@
     Admin
   </button>
   <mat-menu #adminMenu="matMenu">
-    <button mat-menu-item>Placeholder</button>
+    <button mat-menu-item [routerLink]="['admin/csr-pending']">
+      Neobrađeni zahtevi
+    </button>
   </mat-menu>
 
   <button mat-button class="menu-button" [matMenuTriggerFor]="userMenu">

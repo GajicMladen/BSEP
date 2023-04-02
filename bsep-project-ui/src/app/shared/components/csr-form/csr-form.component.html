@@ -1,0 +1,163 @@
+<mat-card>
+  <h1>Zahtev za kreiranje sertifikata</h1>
+  <mat-divider inset></mat-divider>
+  <br />
+  <form [formGroup]="csrForm">
+    <table>
+      <tr>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Domen (CN)</mat-label>
+            <input matInput formControlName="commonName" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Naziv Organizacije (O)</mat-label>
+            <input matInput formControlName="organizationName" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Naziv jedinice (OU)</mat-label>
+            <input matInput formControlName="organizationalUnit" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Mesto (L)</mat-label>
+            <input matInput formControlName="locality" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Region (ST)</mat-label>
+            <input matInput formControlName="state" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Država (C)</mat-label>
+            <input matInput formControlName="country" />
+            <mat-error
+              *ngIf="csrForm.get('country')!.hasError('invalidLengthError')"
+            >
+              Potrebno je uneti dvoslovnu oznaku!
+            </mat-error>
+            <mat-error
+              *ngIf="csrForm.get('country')!.hasError('invalidCharactersError')"
+            >
+              Dozvoljena su samo velika latinična slova!
+            </mat-error>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Email Adresa (E)</mat-label>
+            <input matInput formControlName="email" />
+            <mat-error
+              *ngIf="csrForm.get('email')!.hasError('invalidEmailFormat')"
+            >
+              Neispravan format email adrese!
+            </mat-error>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Algoritam za potpisivanje</mat-label>
+            <mat-select formControlName="algorithm">
+              <mat-option *ngFor="let alg of SIGNING_ALGORITHMS" [value]="alg">
+                {{ alg }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <ng-container *ngIf="certificateMode">
+        <tr>
+          <td>
+            <mat-radio-group formControlName="version">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-evenly;
+                  margin-bottom: 16px;
+                "
+              >
+                <mat-radio-button [value]="1">Verzija 1</mat-radio-button>
+                <mat-radio-button [value]="3">Verzija 3</mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>Period važenja</mat-label>
+              <mat-date-range-input [rangePicker]="picker" [min]="minDate">
+                <input
+                  matStartDate
+                  formControlName="startTime"
+                  placeholder="Početak važenja"
+                />
+                <input
+                  matEndDate
+                  formControlName="endTime"
+                  placeholder="Završetak važenja"
+                />
+              </mat-date-range-input>
+              <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>Veličina ključa</mat-label>
+              <mat-select formControlName="keySize">
+                <mat-option *ngFor="let size of KEY_SIZES" [value]="size">
+                  {{ size }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+        </tr>
+      </ng-container>
+      <br />
+      <tr *ngIf="!previewMode || (previewMode && certificateMode)">
+        <td rowspan="2" align="center">
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="csrForm.invalid"
+            (click)="onSubmitClick()"
+          >
+            Submit
+          </button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</mat-card>

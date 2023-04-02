@@ -1,6 +1,6 @@
 package com.example.SmartHouseAPI.enums;
 
-public enum RequestState {
+public enum RequestStatus {
     PENDING,
     REJECTED,
     ACCEPTED

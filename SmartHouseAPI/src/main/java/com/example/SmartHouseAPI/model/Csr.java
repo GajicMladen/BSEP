@@ -1,13 +1,18 @@
 package com.example.SmartHouseAPI.model;
 
-import com.example.SmartHouseAPI.enums.RequestState;
-import jakarta.persistence.*;
+import com.example.SmartHouseAPI.dto.CsrDTO;
+import com.example.SmartHouseAPI.enums.RequestStatus;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
@@ -18,38 +23,49 @@ public class Csr {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-
-    private String algorithm;
-
-    private String alias;
-
+    @NotBlank
+    private String commonName;
+    @NotBlank
+    private String organizationName;
+    @NotBlank
+    private String organizationalUnit;
+    @NotBlank
+    private String locality;
+    @NotBlank
+    private String state;
+    @Size(min = 2, max = 2)
+    @Pattern(regexp = "^[A-Z]+$")
+    private String country;
+    @Pattern(regexp = "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")
     private String email;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Extension> extensions;
-
-    private int keySize;
-
-    private int version;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Name> names;
-
-    private LocalDateTime validityStart;
-
-    private int validityPeriod;
-
-    private RequestState state;
-
-    private String reasonForRejection;
-
-    private LocalDateTime validityEnd;
-
-    public LocalDateTime getValidityEnd(){
-        return validityStart.plusYears(validityPeriod);
+    @NotBlank
+    private String algorithm;
+    
+    private RequestStatus status;
+    
+    public Csr(CsrDTO dto) {
+    	commonName = dto.getCommonName();
+    	organizationName = dto.getOrganizationName();
+    	organizationalUnit = dto.getOrganizationalUnit();
+    	locality = dto.getLocality();
+    	state = dto.getState();
+    	country = dto.getCountry();
+    	email = dto.getEmail();
+    	algorithm = dto.getAlgorithm();
+    	status = RequestStatus.PENDING;
     }
-
-    public int getKeySize(){
-        return algorithm.equals("RSA") ? keySize * 8 : keySize;
+    
+    public CsrDTO toDTO() {
+    	CsrDTO dto = new CsrDTO();
+    	dto.setCommonName(commonName);
+    	dto.setOrganizationName(organizationName);
+    	dto.setOrganizationalUnit(organizationalUnit);
+    	dto.setLocality(locality);
+    	dto.setState(state);
+    	dto.setCountry(country);
+    	dto.setEmail(email);
+    	dto.setAlgorithm(algorithm);
+    	dto.setStatus(status.toString());
+    	return dto;
     }
 }
