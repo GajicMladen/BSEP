@@ -102,15 +102,21 @@ export class CsrFormComponent implements OnInit {
       this.csrService
         .approveCsr(csr)
         .pipe(takeUntil(this.destroy$))
-        .subscribe((res) => {
-          this.messageService.showMessage('Success!', MessageType.SUCCESS);
+        .subscribe(() => {
+          this.messageService.showMessage(
+            'Sertifikat uspešno odobren!',
+            MessageType.SUCCESS
+          );
         });
     } else {
       this.csrService
         .postCsr(csr)
         .pipe(takeUntil(this.destroy$))
         .subscribe((res) => {
-          this.messageService.showMessage('Success!', MessageType.SUCCESS);
+          this.messageService.showMessage(
+            'CSR uspešno poslat!',
+            MessageType.SUCCESS
+          );
         });
     }
   }

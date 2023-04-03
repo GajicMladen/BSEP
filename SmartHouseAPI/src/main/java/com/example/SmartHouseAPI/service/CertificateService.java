@@ -17,8 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.security.auth.x500.X500Principal;
-import com.example.SmartHouseAPI.enums.RequestStatus;
-import com.example.SmartHouseAPI.repository.CsrRepository;
+
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
@@ -35,7 +34,6 @@ import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.SmartHouseAPI.enums.RequestStatus;
