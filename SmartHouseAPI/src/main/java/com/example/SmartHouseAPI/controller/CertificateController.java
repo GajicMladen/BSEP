@@ -3,12 +3,9 @@ package com.example.SmartHouseAPI.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.SmartHouseAPI.dto.CsrDTO;
 import com.example.SmartHouseAPI.model.Csr;
@@ -32,5 +29,17 @@ public class CertificateController {
     	List<CsrDTO> dtos = new ArrayList<CsrDTO>();
     	csrs.forEach(x -> dtos.add(x.toDTO()));
     	return dtos;
+    }
+
+
+    @GetMapping
+    @RequestMapping(path="/cancel/{alias}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CsrDTO> cancelCertificates(@PathVariable String alias){
+        certificateService.cancelSertificate(alias);
+        List<Csr> csrs = certificateService.getAllCertificates();
+        List<CsrDTO> dtos = new ArrayList<CsrDTO>();
+        csrs.forEach(x -> dtos.add(x.toDTO()));
+        return dtos;
     }
 }

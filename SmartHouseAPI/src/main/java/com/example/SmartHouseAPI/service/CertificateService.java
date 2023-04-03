@@ -15,6 +15,8 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.SmartHouseAPI.enums.RequestStatus;
+import com.example.SmartHouseAPI.repository.CsrRepository;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
@@ -31,6 +33,7 @@ import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.SmartHouseAPI.model.Csr;
@@ -45,6 +48,9 @@ import lombok.AllArgsConstructor;;
 public class CertificateService {
 	
 	private final KeystoreService keyStoreService;
+
+	@Autowired
+	private CsrRepository csrRepository;
 	
 	public X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData, Csr csr) {
 		try {
@@ -116,9 +122,37 @@ public class CertificateService {
         		continue;
         	}
         }
-        return csrs;
+
+		try{
+			csrs.removeIf(c -> !containsAlias(c.getAlias()));
+			csrs.forEach( c -> c.setStatus( getByAlias(c.getAlias()).getStatus() ));
+		}
+		catch (Exception e){
+			System.out.println(e.getMessage());
+		}
+		return csrs;
     }
-	
+
+	public void cancelSertificate(String alias){
+
+		Csr csr = getByAlias(alias);
+		csr.setStatus(RequestStatus.CANCELED);
+		csrRepository.save(csr);
+
+	}
+
+	private boolean containsAlias( final String alias){
+		List<Csr> list = csrRepository.findAll();
+		return list.stream().map( c -> c.getEmail() +"-"+ c.getAlias()).anyMatch(alias::equals);
+	}
+	private Csr getByAlias( String alias){
+		List<Csr> list = csrRepository.findAll();
+		for( Csr csr : list){
+			if( (csr.getEmail() +"-" +csr.getAlias()).equals(alias))
+				return csr;
+		}
+		return null;
+	}
 	public KeyPair generateKeyPair(int keySize, String algorithm) {
 		try {
 			// SHA-1/RSA primer, treba samo RSA
@@ -200,6 +234,7 @@ public class CertificateService {
 		csr.setStartDate(certificate.getNotBefore());
 		csr.setEndDate(certificate.getNotAfter());
 		csr.setVersion(certificate.getVersion());
+
 		return csr;
 	}
 	

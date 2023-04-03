@@ -1,5 +1,6 @@
 <mat-card>
-  <h1>Zahtev za kreiranje sertifikata</h1>
+  <h1 *ngIf="!certificateMode">Zahtev za kreiranje sertifikata</h1>
+  <h1 *ngIf="certificateMode">Certifikat</h1>
   <mat-divider inset></mat-divider>
   <br />
   <form [formGroup]="csrForm">
