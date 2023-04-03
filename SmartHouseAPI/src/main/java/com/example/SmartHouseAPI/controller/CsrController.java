@@ -3,6 +3,7 @@ package com.example.SmartHouseAPI.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.SmartHouseAPI.dto.CsrDTO;
 import com.example.SmartHouseAPI.enums.RequestStatus;
+import com.example.SmartHouseAPI.model.Csr;
 import com.example.SmartHouseAPI.service.CsrService;
 
 import jakarta.validation.Valid;
@@ -43,5 +45,13 @@ public class CsrController {
     				.status(HttpStatus.BAD_REQUEST)
     				.body("Invalid status value: " + statusString);
 		}
+    }
+    
+    @GetMapping
+    @RequestMapping(path="/reject/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void reject(@PathVariable final Long id){
+    	Csr csr = csrService.findById(id);
+    	csrService.reject(csr);
     }
 }

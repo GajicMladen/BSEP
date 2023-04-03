@@ -34,9 +34,19 @@ public class CsrService {
     	return convertCsrsToDtos(csrs);
     }
     
+    public void reject(Csr csr) {
+    	csr.setStatus(RequestStatus.REJECTED);
+    	csrRepository.save(csr);
+    }
+
+    public Csr findById(Long id) {
+    	return csrRepository.findById(id).get();
+    }
+    
     private List<CsrDTO> convertCsrsToDtos(List<Csr> csrList) {
     	List<CsrDTO> dtos = new ArrayList<CsrDTO>();
         csrList.forEach(csr -> dtos.add(csr.toDTO()));
         return dtos;
     }
+    
 }

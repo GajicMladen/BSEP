@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { RequestStatus } from 'src/app/shared/enums/RequestStatus';
 import { CsrService } from 'src/app/shared/services/csr.service';
 import { Csr } from 'src/app/user/models/Csr';
 
@@ -14,6 +15,18 @@ export class CsrListViewComponent implements OnInit {
   pendingCsrs: Csr[] = [];
 
   constructor(private csrService: CsrService) {}
+
+  get RequestStatus() {
+    return RequestStatus;
+  }
+
+  get numOfPendings() {
+    let ret = 0;
+    for (let i = 0; i < this.pendingCsrs.length; i++) {
+      if (this.pendingCsrs[i].status === RequestStatus.PENDING) ret++;
+    }
+    return ret;
+  }
 
   ngOnInit(): void {
     this.csrService

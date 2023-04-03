@@ -57,6 +57,7 @@ public class Csr {
     
     public CsrDTO toDTO() {
     	CsrDTO dto = new CsrDTO();
+    	dto.setId(id);
     	dto.setCommonName(commonName);
     	dto.setOrganizationName(organizationName);
     	dto.setOrganizationalUnit(organizationalUnit);
