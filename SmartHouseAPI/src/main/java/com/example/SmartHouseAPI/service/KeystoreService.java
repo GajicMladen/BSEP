@@ -5,12 +5,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Key;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.style.BCStyle;
@@ -33,6 +36,34 @@ public class KeystoreService {
 			e.printStackTrace();
 		}
 	}
+	
+	public String getCertificateAlias(X509Certificate cert) {
+		try {
+			return keyStore.getCertificateAlias(cert);
+		} catch (KeyStoreException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+    public List<Certificate> getAllCertificates() {
+    	try {
+    		List<Certificate> certificateList = new ArrayList<Certificate>();
+    		Enumeration<String> aliases = keyStore.aliases();
+    		while (aliases.hasMoreElements()) {
+    			String alias = aliases.nextElement();
+    			Certificate certificate = keyStore.getCertificate(alias);
+    			if (certificate != null) {
+    				certificateList.add(keyStore.getCertificate(alias));
+    			}
+    		}
+    		return certificateList;
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+
+        return new ArrayList<Certificate>();
+    }
 	
     public void loadKeyStore(String keyStoreFile, char[] password) throws CertificateException, IOException, NoSuchAlgorithmException {
         try {
