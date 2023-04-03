@@ -39,4 +39,11 @@ public class CsrDTO {
 	    private String algorithm;
 	    
 	    private String status;
+	    
+	    private Integer keySize;
+	    private String alias;
+	    private String startDate;
+	    private String endDate;
+	    private Integer version;
+	    
 }

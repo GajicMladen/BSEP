@@ -1,23 +1,34 @@
 package com.example.SmartHouseAPI.service;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Key;
 import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.Enumeration;
 
+import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class KeystoreService {
 
-	private final String KEYSTORE_PATH = "./resources/keystore.jks";
+	public final String KEYSTORE_PATH = "src/main/resources/keystore.jks";
+	public final char[] PASSWORD = "pass".toCharArray();
+	
 	private KeyStore keyStore;
 	
 	public KeystoreService() {
 		try {
 			keyStore = KeyStore.getInstance("JKS", "SUN");
-			loadKeyStore(KEYSTORE_PATH, "pass".toCharArray());
+			loadKeyStore(KEYSTORE_PATH, PASSWORD);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -30,6 +41,46 @@ public class KeystoreService {
             } else {
                 keyStore.load(null, password);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public PrivateKey getPrivateKey() throws Exception {
+        loadKeyStore(KEYSTORE_PATH, PASSWORD);
+        Enumeration<String> aliases = keyStore.aliases();
+        while (aliases.hasMoreElements()) {
+            String alias = aliases.nextElement();
+            Certificate cert = keyStore.getCertificate(alias);
+            X509Certificate x509Cert = (X509Certificate) cert;
+            X500Name x500name = new JcaX509CertificateHolder(x509Cert).getSubject();
+            String cn = x500name.getRDNs(BCStyle.CN)[0].getFirst().getValue().toString();
+             if (cn != null && cn.equals("Sertifikat za korisnike")) {
+                Key key = keyStore.getKey(alias, PASSWORD);
+                if (key instanceof PrivateKey) {
+                    return (PrivateKey) key;
+                }
+            }
+        }
+        return null; // private key not found
+    }
+    
+    public void write(String alias, PrivateKey privateKey, char[] password, Certificate certificate) {
+        try {
+            keyStore.setKeyEntry(alias, privateKey, password, new Certificate[]{certificate});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void persist(String alias, PrivateKey privateKey, Certificate certificate){
+        write(alias, privateKey, PASSWORD, certificate);
+        saveKeyStore();
+    }
+    
+    public void saveKeyStore() {
+        try {
+            keyStore.store(new FileOutputStream(KEYSTORE_PATH), PASSWORD);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -11,4 +11,8 @@ export interface Csr {
   email: string;
   algorithm: string;
   status?: RequestStatus;
+  startDate: Date;
+  endDate: Date;
+  version: number;
+  alias: string;
 }

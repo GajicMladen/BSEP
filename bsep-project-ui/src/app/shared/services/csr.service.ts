@@ -23,6 +23,11 @@ export class CsrService {
     return this.http.get<Csr[]>(url);
   }
 
+  approveCsr(csr: Csr): Observable<void> {
+    let url = `${this.url}/approve`;
+    return this.http.post<void>(url, csr);
+  }
+
   rejectCsr(id: number): Observable<void> {
     let url = `${this.url}/reject/${id}`;
     return this.http.get<void>(url);

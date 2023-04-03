@@ -70,9 +70,10 @@ export class CsrFormComponent implements OnInit {
   createCertificateForm(data: any): FormGroup {
     let ret = this.createCsrForm(data);
     ret.addControl('version', new FormControl(data.version || 3));
-    ret.addControl('startTime', new FormControl(data.startTime || ''));
-    ret.addControl('endTime', new FormControl(data.endTime || ''));
+    ret.addControl('startDate', new FormControl(data.startTime || ''));
+    ret.addControl('endDate', new FormControl(data.endTime || ''));
     ret.addControl('keySize', new FormControl(data.keySize || 2048));
+    ret.addControl('alias', new FormControl(data.alias || ''));
     ret.addControl('extensions', new FormArray(data.extensions || []));
     return ret;
   }
@@ -90,12 +91,20 @@ export class CsrFormComponent implements OnInit {
 
   onSubmitClick() {
     let csr: Csr = this.csrForm.getRawValue();
-    this.csrService
-      .postCsr(csr)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
-        console.log(res);
-        this.messageService.showMessage('Success!', MessageType.SUCCESS);
-      });
+    if (this.certificateMode) {
+      this.csrService
+        .approveCsr(csr)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res) => {
+          this.messageService.showMessage('Success!', MessageType.SUCCESS);
+        });
+    } else {
+      this.csrService
+        .postCsr(csr)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res) => {
+          this.messageService.showMessage('Success!', MessageType.SUCCESS);
+        });
+    }
   }
 }
