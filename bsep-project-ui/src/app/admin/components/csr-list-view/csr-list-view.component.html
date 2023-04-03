@@ -1,5 +1,11 @@
 <mat-card class="main-container">
   <ng-container *ngFor="let csr of pendingCsrs">
-    <app-csr-item [csrRequest]="csr"></app-csr-item>
+    <app-csr-item
+      [csrRequest]="csr"
+      *ngIf="csr.status === RequestStatus.PENDING"
+    ></app-csr-item>
   </ng-container>
+  <h1 *ngIf="numOfPendings === 0" style="text-align: center">
+    Nema CSR-ova koji čekaju na obradu!
+  </h1>
 </mat-card>

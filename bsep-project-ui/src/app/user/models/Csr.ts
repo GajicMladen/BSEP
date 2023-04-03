@@ -1,6 +1,7 @@
 import { RequestStatus } from 'src/app/shared/enums/RequestStatus';
 
 export interface Csr {
+  id: number;
   commonName: string;
   organizationName: string;
   organizationalUnit: string;

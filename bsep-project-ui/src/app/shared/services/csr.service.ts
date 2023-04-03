@@ -22,4 +22,9 @@ export class CsrService {
     let url = `${this.url}/all/PENDING`;
     return this.http.get<Csr[]>(url);
   }
+
+  rejectCsr(id: number): Observable<void> {
+    let url = `${this.url}/reject/${id}`;
+    return this.http.get<void>(url);
+  }
 }
