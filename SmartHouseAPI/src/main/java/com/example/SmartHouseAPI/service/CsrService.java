@@ -1,5 +1,6 @@
 package com.example.SmartHouseAPI.service;
 
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.example.SmartHouseAPI.dto.CsrDTO;
 import com.example.SmartHouseAPI.enums.RequestStatus;
 import com.example.SmartHouseAPI.model.Csr;
+import com.example.SmartHouseAPI.model.IssuerData;
+import com.example.SmartHouseAPI.model.SubjectDataPK;
 import com.example.SmartHouseAPI.repository.CsrRepository;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +19,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CsrService {
 
+	private final CertificateService certificateService;
+	private final KeystoreService keyStoreService;
+	
     private final CsrRepository csrRepository;
 
     public Csr create(CsrDTO dto) {
@@ -35,7 +41,12 @@ public class CsrService {
     }
     
     public void approve(Csr csr) {
-    	
+    	SubjectDataPK subjectDataPK = certificateService.buildSubjectData(csr);
+    	IssuerData issuerData = certificateService.buildIssuerData();
+    	X509Certificate certificate = certificateService.generateCertificate(subjectDataPK.getSubjectData(), issuerData, csr);
+        keyStoreService.persist(csr.getEmail() + "-" + csr.getAlias(), issuerData.getPrivateKey(), certificate);
+        csr.setStatus(RequestStatus.ACCEPTED);
+        csrRepository.save(csr);
     }
     
     public void reject(Csr csr) {

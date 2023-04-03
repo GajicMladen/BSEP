@@ -50,8 +50,9 @@ public class CsrController {
     @PostMapping
     @RequestMapping(path="/approve")
     @ResponseStatus(HttpStatus.CREATED)
-    public void approve(@RequestBody @Valid final CsrDTO csr) {
-    	
+    public void approve(@RequestBody @Valid final CsrDTO dto) {
+    	Csr csr = new Csr(dto);
+    	csrService.approve(csr);
     }
     
     @GetMapping

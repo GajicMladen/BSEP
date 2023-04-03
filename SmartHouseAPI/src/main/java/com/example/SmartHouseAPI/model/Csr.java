@@ -1,5 +1,7 @@
 package com.example.SmartHouseAPI.model;
 
+import java.util.Date;
+
 import com.example.SmartHouseAPI.dto.CsrDTO;
 import com.example.SmartHouseAPI.enums.RequestStatus;
 
@@ -13,6 +15,9 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import static com.example.SmartHouseAPI.util.DateParser.parseDate;
+import static com.example.SmartHouseAPI.util.DateParser.stringifyDate;
 
 @Entity
 @Data
@@ -40,6 +45,12 @@ public class Csr {
     private String email;
     @NotBlank
     private String algorithm;
+
+    private Integer keySize;
+    private Date startDate;
+    private Date endDate;
+    private String alias;
+    private Integer version;
     
     private RequestStatus status;
     
@@ -52,7 +63,17 @@ public class Csr {
     	country = dto.getCountry();
     	email = dto.getEmail();
     	algorithm = dto.getAlgorithm();
+    	keySize = dto.getKeySize();
     	status = RequestStatus.PENDING;
+    	
+    	if (dto.getStartDate() != null)
+    		startDate = parseDate(dto.getStartDate());
+    	
+    	if (dto.getEndDate() != null)
+    		endDate = parseDate(dto.getEndDate());
+    	
+    	alias = dto.getAlias();
+    	version = dto.getVersion();
     }
     
     public CsrDTO toDTO() {
@@ -67,6 +88,16 @@ public class Csr {
     	dto.setEmail(email);
     	dto.setAlgorithm(algorithm);
     	dto.setStatus(status.toString());
+    	dto.setKeySize(keySize);
+    	
+    	if(startDate != null)
+    		dto.setStartDate(stringifyDate(startDate));
+    	
+    	if(endDate != null)
+    		dto.setEndDate(stringifyDate(endDate));
+    	
+    	dto.setAlias(alias);
+    	dto.setVersion(version);
     	return dto;
     }
 }
