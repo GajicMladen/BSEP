@@ -8,7 +8,11 @@
       (csrChanged)="getCsrToShow()"
     ></app-certificate-item>
   </ng-container>
-  <h1 *ngIf="csrToShow.length === 0" style="text-align: center">
+  <h1 *ngIf="csrToShow.length === 0 && !cetrificatesToShow"  style="text-align: center">
     Nema CSR-ova koji čekaju na obradu!
+  </h1>
+  
+  <h1 *ngIf="csrToShow.length === 0 && cetrificatesToShow" style="text-align: center">
+    Nema certifikata!
   </h1>
 </mat-card>

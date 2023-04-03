@@ -1,7 +1,8 @@
 <mat-card class="item">
   <!-- <h1>{{ csrRequest.email }}</h1> -->
   <h3>{{ csrRequest.alias }}</h3>
-  <span>{{ csrRequest.status }}</span>
+  <h2 [ngClass]="{'red': csrRequest.status === 'CANCELED' , 'green': csrRequest.status === 'ACCEPTED'}">
+    {{ csrRequest.status }}</h2>
   <div class="actions">
     <fa-icon
       [icon]="faMagnifyingGlass"

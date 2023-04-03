@@ -20,3 +20,13 @@
     transition-duration: .2s;
     cursor: pointer;
   }
+
+  .red{
+    background-color: red;
+    border-radius: 5px;
+  }
+
+  .green{
+    border-radius: 5px;
+    background-color: lightgreen;
+  }
