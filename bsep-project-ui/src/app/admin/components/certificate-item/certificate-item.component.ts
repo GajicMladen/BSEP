@@ -19,7 +19,7 @@ import { Csr } from 'src/app/user/models/Csr';
 @Component({
   selector: 'app-certificate-item',
   templateUrl: './certificate-item.component.html',
-  styleUrls: ['./certificate-item.component.css']
+  styleUrls: ['./certificate-item.component.css'],
 })
 export class CertificateItemComponent implements OnInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
@@ -30,7 +30,7 @@ export class CertificateItemComponent implements OnInit {
 
   @Input() csrRequest!: Csr;
 
-  @Output() csrChanged : EventEmitter<any> = new  EventEmitter();
+  @Output() csrChanged: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private dialog: MatDialog,
@@ -40,6 +40,10 @@ export class CertificateItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  get RequestStatus() {
+    return RequestStatus;
+  }
+
   openPreviewDialog(certificateMode: boolean): void {
     const dialogRef = this.dialog.open(CsrFormComponent);
     let comp = dialogRef.componentInstance;
@@ -47,6 +51,7 @@ export class CertificateItemComponent implements OnInit {
     if (certificateMode)
       comp.csrForm = comp.createCertificateForm(this.csrRequest);
     else comp.csrForm = comp.createCsrForm(this.csrRequest);
+    comp.csrForm.disable();
     comp.previewMode = true;
     comp.certificateMode = certificateMode;
 
@@ -58,15 +63,32 @@ export class CertificateItemComponent implements OnInit {
       });
   }
 
-  cancelCsr(alias: string) {
-    console.log(alias);
+  validateCsr(alias: string) {
     this.certificateService
-        .cancelCertificate(alias)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((res) => {
-          console.log(res);
-          this.csrChanged.emit(res);
-        });
+      .validateCertificate(alias)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        if (res) {
+          this.messageService.showMessage(
+            'Sertifikat je validan!',
+            MessageType.SUCCESS
+          );
+        } else {
+          this.messageService.showMessage(
+            'Sertifikat nije validan!',
+            MessageType.ERROR
+          );
+        }
+      });
   }
 
+  cancelCsr(alias: string) {
+    this.certificateService
+      .cancelCertificate(alias)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        console.log(res);
+        this.csrChanged.emit(res);
+      });
+  }
 }

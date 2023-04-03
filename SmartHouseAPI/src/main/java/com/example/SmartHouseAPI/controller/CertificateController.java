@@ -3,7 +3,6 @@ package com.example.SmartHouseAPI.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

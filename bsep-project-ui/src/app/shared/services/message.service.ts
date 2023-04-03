@@ -37,6 +37,7 @@ export class MessageService {
 
   private showErrorMessage(message: string) {
     this.matSnack.openFromComponent(MessageComponent, {
+      duration: 3000,
       data: {
         message: message,
         icon: faExclamationTriangle,
@@ -47,7 +48,7 @@ export class MessageService {
 
   private showSuccessMessage(message: string) {
     this.matSnack.openFromComponent(MessageComponent, {
-      duration: 5000,
+      duration: 3000,
       data: {
         message: message,
         icon: faCheckCircle,
@@ -58,7 +59,7 @@ export class MessageService {
 
   private showInfoMessage(message: string) {
     this.matSnack.openFromComponent(MessageComponent, {
-      duration: 5000,
+      duration: 3000,
       data: {
         message: message,
         icon: faInfoCircle,
@@ -69,7 +70,7 @@ export class MessageService {
 
   private showWarningMessage(message: string) {
     this.matSnack.openFromComponent(MessageComponent, {
-      duration: 5000,
+      duration: 3000,
       data: {
         message: message,
         icon: faExclamationCircle,
