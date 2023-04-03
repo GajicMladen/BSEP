@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'csr-pending',
     component: CsrListViewComponent,
   },
+  {
+    path: 'csr-all',
+    component: CsrListViewComponent,
+  },
 ];
 
 @NgModule({

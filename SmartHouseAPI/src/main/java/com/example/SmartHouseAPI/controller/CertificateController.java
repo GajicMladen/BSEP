@@ -3,6 +3,7 @@ package com.example.SmartHouseAPI.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,5 +41,16 @@ public class CertificateController {
     @ResponseStatus(HttpStatus.OK)
     public boolean validate(@PathVariable String alias) {
     	return certificateService.validateCertificate(alias);
+
+
+    @GetMapping
+    @RequestMapping(path="/cancel/{alias}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CsrDTO> cancelCertificates(@PathVariable String alias){
+        certificateService.cancelSertificate(alias);
+        List<Csr> csrs = certificateService.getAllCertificates();
+        List<CsrDTO> dtos = new ArrayList<CsrDTO>();
+        csrs.forEach(x -> dtos.add(x.toDTO()));
+        return dtos;
     }
 }
