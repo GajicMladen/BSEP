@@ -43,7 +43,7 @@ public class CsrService {
     public void approve(Csr csr) {
     	SubjectDataPK subjectDataPK = certificateService.buildSubjectData(csr);
     	IssuerData issuerData = certificateService.buildIssuerData(csr.getIntermediateCertificate());
-    	X509Certificate certificate = certificateService.generateCertificate(subjectDataPK.getSubjectData(), issuerData, csr);
+    	X509Certificate certificate = certificateService.generateCertificate(subjectDataPK.getSubjectData(), issuerData, csr, subjectDataPK.getPrivateKey());
         keyStoreService.persist(csr.getAlias(), issuerData.getPrivateKey(), certificate);
         csr.setStatus(RequestStatus.ACCEPTED);
         csrRepository.save(csr);
