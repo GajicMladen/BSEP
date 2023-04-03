@@ -160,12 +160,7 @@ public class CertificateService {
 		return list.stream().map( c ->  c.getAlias()).anyMatch(alias::equals);
 	}
 	private Csr getByAlias( String alias){
-		List<Csr> list = csrRepository.findAll();
-		for( Csr csr : list){
-			if(  csr.getAlias().equals(alias) )
-				return csr;
-		}
-		return null;
+		return csrRepository.findByAlias(alias);
 	}
 
 	public KeyPair generateKeyPair(int keySize, String algorithm) {
@@ -184,7 +179,7 @@ public class CertificateService {
 	
 	private boolean isCertificateRevoked(String alias) {
 		Csr csr = csrRepository.findByAlias(alias);
-		return csr.getStatus().equals(RequestStatus.REJECTED);
+		return csr.getStatus().equals(RequestStatus.CANCELED);
 	}
 	
 	private boolean validateDates(String alias) {

@@ -40,8 +40,8 @@ public class CertificateController {
     @RequestMapping(path="/validate/{alias}")
     @ResponseStatus(HttpStatus.OK)
     public boolean validate(@PathVariable String alias) {
-    	return certificateService.validateCertificate(alias);
-
+        return certificateService.validateCertificate(alias);
+    }
 
     @GetMapping
     @RequestMapping(path="/cancel/{alias}")
