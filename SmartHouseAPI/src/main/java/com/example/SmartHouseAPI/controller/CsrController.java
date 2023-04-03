@@ -47,6 +47,13 @@ public class CsrController {
 		}
     }
     
+    @PostMapping
+    @RequestMapping(path="/approve")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void approve(@RequestBody @Valid final CsrDTO csr) {
+    	
+    }
+    
     @GetMapping
     @RequestMapping(path="/reject/{id}")
     @ResponseStatus(HttpStatus.OK)

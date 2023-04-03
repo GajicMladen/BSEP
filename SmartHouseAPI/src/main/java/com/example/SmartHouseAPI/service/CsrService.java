@@ -34,6 +34,10 @@ public class CsrService {
     	return convertCsrsToDtos(csrs);
     }
     
+    public void approve(Csr csr) {
+    	
+    }
+    
     public void reject(Csr csr) {
     	csr.setStatus(RequestStatus.REJECTED);
     	csrRepository.save(csr);
