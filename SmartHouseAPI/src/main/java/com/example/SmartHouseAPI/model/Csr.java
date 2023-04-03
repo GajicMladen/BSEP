@@ -87,7 +87,8 @@ public class Csr {
     	dto.setCountry(country);
     	dto.setEmail(email);
     	dto.setAlgorithm(algorithm);
-    	dto.setStatus(status.toString());
+    	if (status != null)
+    		dto.setStatus(status.toString());
     	dto.setKeySize(keySize);
     	
     	if(startDate != null)

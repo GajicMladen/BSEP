@@ -8,15 +8,24 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.Security;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
+import java.security.interfaces.RSAPublicKey;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.bouncycastle.asn1.x500.style.IETFUtils;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v1CertificateBuilder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509v1CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -95,6 +104,21 @@ public class CertificateService {
         return null;
 	}
 	
+    public List<Csr> getAllCertificates() {
+    	
+        List<Certificate> certificateList = keyStoreService.getAllCertificates();
+        List<Csr> csrs = new ArrayList<Csr>();
+        for(Certificate c: certificateList) {
+        	try {
+        		csrs.add(convertFromCertificate((X509Certificate) c));
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        		continue;
+        	}
+        }
+        return csrs;
+    }
+	
 	public KeyPair generateKeyPair(int keySize, String algorithm) {
 		try {
 			// SHA-1/RSA primer, treba samo RSA
@@ -157,5 +181,39 @@ public class CertificateService {
 		else if (shaTokens[1].equals("512")) return "SHA512WithRSAEncryption";
 		//Default
 		return "SHA512WithRSAEncryption";
+	}
+	
+	private Csr convertFromCertificate(X509Certificate certificate) throws CertificateEncodingException {
+		Csr csr = new Csr();
+		csr.setAlgorithm(getFormattedStringAlgorithm(certificate.getSigAlgName()));
+		csr.setAlias(keyStoreService.getCertificateAlias(certificate));
+
+		X500Name x500name = new JcaX509CertificateHolder(certificate).getSubject();
+		csr.setCommonName(getRDNString(x500name, BCStyle.CN));
+		csr.setEmail(getRDNString(x500name, BCStyle.E));
+		csr.setOrganizationName(getRDNString(x500name, BCStyle.O));
+		csr.setOrganizationalUnit(getRDNString(x500name, BCStyle.OU));
+		csr.setLocality(getRDNString(x500name, BCStyle.L));
+		csr.setState(getRDNString(x500name, BCStyle.ST));
+		csr.setCountry(getRDNString(x500name, BCStyle.C));
+		csr.setKeySize(((RSAPublicKey)certificate.getPublicKey()).getModulus().bitLength());
+		csr.setStartDate(certificate.getNotBefore());
+		csr.setEndDate(certificate.getNotAfter());
+		csr.setVersion(certificate.getVersion());
+		return csr;
+	}
+	
+	private String getFormattedStringAlgorithm(String algorithm) {
+		String substring = algorithm.substring(3);
+		String[] tokens = substring.split("with");
+		return "SHA-" + tokens[0] + "/RSA";
+	}
+	
+	private String getRDNString(X500Name name, ASN1ObjectIdentifier style) {
+		RDN[] arr = name.getRDNs(style);
+		if (arr.length > 0)
+			return IETFUtils.valueToString(arr[0].getFirst().getValue());
+		else 
+			return "";
 	}
 }

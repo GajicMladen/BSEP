@@ -73,7 +73,10 @@ export class CsrFormComponent implements OnInit {
     ret.addControl('startDate', new FormControl(data.startTime || ''));
     ret.addControl('endDate', new FormControl(data.endTime || ''));
     ret.addControl('keySize', new FormControl(data.keySize || 2048));
-    ret.addControl('alias', new FormControl(data.alias || ''));
+    ret.addControl(
+      'alias',
+      new FormControl(data.alias || '', Validators.required)
+    );
     ret.addControl('extensions', new FormArray(data.extensions || []));
     return ret;
   }
