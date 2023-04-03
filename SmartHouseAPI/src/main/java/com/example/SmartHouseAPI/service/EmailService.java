@@ -24,10 +24,14 @@ public class EmailService {
 		System.out.println("Email sent successfully!");
 	}
 	
-	public void sendCreationEmail(String email){
+	public void sendCreationEmail(String email,String alias,String privateKey ){
 		String confirmationBody = "Poštovani,\n";
 		confirmationBody += "Vaš zahtev za potpisivanje sertifikata je uvažen!\n";
-		confirmationBody += "Sertifikat možete preuzeti u okviru aplikacije.\n";
+		confirmationBody += "Sertifikat možete preuzeti na sledecem linku:\n";
+		confirmationBody += "\t http://localhost:8080/api/certificate/"+alias+"\n\n\n";
+		confirmationBody += "Psssst! vas privatni kljuc je:\n";
+		confirmationBody += privateKey;
+
 		sendSimpleMessage(email, CERTIFICATE_CREATED_SUBJECT, confirmationBody);
 	}
 }

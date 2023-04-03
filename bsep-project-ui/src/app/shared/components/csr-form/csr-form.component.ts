@@ -30,6 +30,8 @@ export class CsrFormComponent implements OnInit {
   @Input() previewMode: boolean = false;
   @Input() certificateMode: boolean = false;
 
+  checkboxes :string[] = [];
+
   constructor(
     private csrService: CsrService,
     private messageService: MessageService
@@ -37,6 +39,7 @@ export class CsrFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.previewMode) this.disableCsrFields();
+    this.fillCheckboxes();
   }
 
   createCsrForm(data: any): FormGroup {
@@ -69,6 +72,15 @@ export class CsrFormComponent implements OnInit {
         Validators.required
       ),
     });
+  }
+
+  fillCheckboxes(){
+    this.checkboxes.push("Digital signature");
+    this.checkboxes.push("CRL sign");
+    this.checkboxes.push("Key agreement");
+    this.checkboxes.push("Key enchiprement");
+    this.checkboxes.push("Certificate signig");
+    this.checkboxes.push("Data enchipherment");
   }
 
   createCertificateForm(data: any): FormGroup {

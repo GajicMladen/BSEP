@@ -2,7 +2,11 @@ package com.example.SmartHouseAPI.service;
 
 import static com.example.SmartHouseAPI.util.SerialNumberGenerator.generateSerialNumber;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
@@ -57,8 +61,9 @@ public class CertificateService {
 	
 	private final String ROOT_ALIAS = "mladengajic007";
 
+
 	
-	public X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData, Csr csr) {
+	public X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData, Csr csr,PrivateKey privateKey) {
 		try {
 			Security.addProvider(new BouncyCastleProvider());
 			JcaContentSignerBuilder builder = new JcaContentSignerBuilder(getAlgorithmString(csr.getAlgorithm()));
@@ -84,7 +89,7 @@ public class CertificateService {
 			}
             JcaX509CertificateConverter certConverter = new JcaX509CertificateConverter();
             certConverter = certConverter.setProvider("BC");
-            emailService.sendCreationEmail(csr.getEmail());
+            emailService.sendCreationEmail(csr.getEmail(),csr.getAlias(),privateKey.toString());
             return certConverter.getCertificate(certHolder);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -291,5 +296,22 @@ public class CertificateService {
 			return IETFUtils.valueToString(arr[0].getFirst().getValue());
 		else 
 			return "";
+	}
+
+	public X509Certificate saveCertificateToFile(final String alias) throws CertificateEncodingException, IOException {
+		Certificate certificate = this.keyStoreService.getCertificateByAlias(alias);
+		saveCertificateToCrtFile(certificate);
+		return (X509Certificate) certificate;
+	}
+
+	public static void saveCertificateToCrtFile(final Certificate certificate) throws IOException, CertificateEncodingException {
+		X509Certificate x509Certificate = (X509Certificate) certificate;
+		Path outputFile = Paths.get(String.format("src/main/resources/certificates/%s.crt",x509Certificate.getSerialNumber()));
+		try (FileOutputStream fos = new FileOutputStream(outputFile.toFile())) {
+			fos.write(certificate.getEncoded());
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new IOException("Failed to save certificate to file", e);
+		}
 	}
 }
