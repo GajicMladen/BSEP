@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,5 +33,12 @@ public class CertificateController {
     	List<CsrDTO> dtos = new ArrayList<CsrDTO>();
     	csrs.forEach(x -> dtos.add(x.toDTO()));
     	return dtos;
+    }
+    
+    @GetMapping
+    @RequestMapping(path="/validate/{alias}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean validate(@PathVariable String alias) {
+    	return certificateService.validateCertificate(alias);
     }
 }

@@ -13,7 +13,10 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPublicKey;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.security.auth.x500.X500Principal;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x500.RDN;
@@ -33,10 +36,12 @@ import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.springframework.stereotype.Service;
 
+import com.example.SmartHouseAPI.enums.RequestStatus;
 import com.example.SmartHouseAPI.model.Csr;
 import com.example.SmartHouseAPI.model.IssuerData;
 import com.example.SmartHouseAPI.model.SubjectData;
 import com.example.SmartHouseAPI.model.SubjectDataPK;
+import com.example.SmartHouseAPI.repository.CsrRepository;
 
 import lombok.AllArgsConstructor;;
 
@@ -45,6 +50,10 @@ import lombok.AllArgsConstructor;;
 public class CertificateService {
 	
 	private final KeystoreService keyStoreService;
+	private final CsrRepository csrRepository;
+	private final EmailService emailService;
+	
+	private final String ROOT_ALIAS = "mladengajic007";
 	
 	public X509Certificate generateCertificate(SubjectData subjectData, IssuerData issuerData, Csr csr) {
 		try {
@@ -72,6 +81,7 @@ public class CertificateService {
 			}
             JcaX509CertificateConverter certConverter = new JcaX509CertificateConverter();
             certConverter = certConverter.setProvider("BC");
+            emailService.sendCreationEmail(csr.getEmail());
             return certConverter.getCertificate(certHolder);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,10 +89,9 @@ public class CertificateService {
 		return null;
 	}
 	
-	public IssuerData buildIssuerData() {
+	public IssuerData buildIssuerData(String name) {
 		try {
-			Long serialNumber = generateSerialNumber();
-			X500Name issuerName = buildIssuerName(serialNumber);
+			X500Name issuerName = buildIssuerName(name);
 			PrivateKey pk = keyStoreService.getPrivateKey();
 			return new IssuerData(issuerName, pk);
 		} catch (Exception e) {
@@ -118,6 +127,14 @@ public class CertificateService {
         }
         return csrs;
     }
+    
+    public boolean validateCertificate(String alias) {
+    	boolean isChainValid = validateChain(alias);
+    	boolean areDatesValid = validateDates(alias);
+    	boolean isRevoked = isCertificateRevoked(alias);
+    	
+    	return isChainValid && areDatesValid && !isRevoked;
+    }
 	
 	public KeyPair generateKeyPair(int keySize, String algorithm) {
 		try {
@@ -131,6 +148,42 @@ public class CertificateService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	private boolean isCertificateRevoked(String alias) {
+		Csr csr = csrRepository.findByAlias(alias);
+		return csr.getStatus().equals(RequestStatus.REJECTED);
+	}
+	
+	private boolean validateDates(String alias) {
+		X509Certificate cert = (X509Certificate)keyStoreService.getCertificateByAlias(alias);
+    	Date endDate = cert.getNotAfter();
+    	Date startDate = cert.getNotBefore();
+    	Date now = new Date();
+    	return now.after(startDate) && now.before(endDate);
+	}
+	
+	private boolean validateChain(String alias) {
+		X509Certificate cert = (X509Certificate)keyStoreService.getCertificateByAlias(alias);
+    	try {
+    		X500Principal issuerDN = cert.getIssuerX500Principal();
+    		String issuerName = issuerDN.getName();
+    		String issuerCN = "";
+    		String[] nameParts = issuerName.split(",");
+    		for (String part : nameParts) {
+    		    if (part.startsWith("CN=")) {
+    		        issuerCN = part.substring(3);
+    		        break;
+    		    }
+    		}
+	    	Certificate intermediate = keyStoreService.getCertificateByAlias(issuerCN.toLowerCase() + " (mladen gajic)");
+	    	Certificate root = keyStoreService.getCertificateByAlias(ROOT_ALIAS);
+	    	cert.verify(intermediate.getPublicKey());
+	    	intermediate.verify(root.getPublicKey());
+	    	return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	private X500Name buildSubjectName(Csr csr, Long serialNumber) {
@@ -152,20 +205,15 @@ public class CertificateService {
 		return null;
 	}
 	
-	private X500Name buildIssuerName(Long serialNumber) {
+	private X500Name buildIssuerName(String name) {
 		try {
 			X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
 			
-			builder.addRDN(BCStyle.CN, "www.tim23.com");
-			builder.addRDN(BCStyle.O, "BSEP");
-			builder.addRDN(BCStyle.OU, "Tim 23");
-			builder.addRDN(BCStyle.L, "Novi Sad");
-			builder.addRDN(BCStyle.ST, "Vojvodina");
-			builder.addRDN(BCStyle.C, "Srbija");
-			builder.addRDN(BCStyle.E, "tim23@gmail.com");
-	        builder.addRDN(BCStyle.SURNAME, "Mladen");
-	        builder.addRDN(BCStyle.GIVENNAME, "Gajic");
-	        builder.addRDN(BCStyle.SERIALNUMBER, serialNumber.toString());
+			builder.addRDN(BCStyle.C, "SR");
+			builder.addRDN(BCStyle.L, "NS");
+			builder.addRDN(BCStyle.O, "FTN");
+			builder.addRDN(BCStyle.OU, "SIIT");
+			builder.addRDN(BCStyle.CN, name);
 	        return builder.build();
 		} catch (Exception e) {
 			e.printStackTrace();

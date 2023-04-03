@@ -46,6 +46,19 @@ public class KeystoreService {
 		return null;
 	}
 	
+    public Certificate getCertificateByAlias(String alias) {
+        try {
+            loadKeyStore(KEYSTORE_PATH, PASSWORD);
+            if (keyStore.isKeyEntry(alias)) {
+                Certificate cert = keyStore.getCertificate(alias);
+                return cert;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+	
     public List<Certificate> getAllCertificates() {
     	try {
     		List<Certificate> certificateList = new ArrayList<Certificate>();

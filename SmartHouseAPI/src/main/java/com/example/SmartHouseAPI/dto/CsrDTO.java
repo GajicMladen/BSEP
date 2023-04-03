@@ -45,5 +45,6 @@ public class CsrDTO {
 	    private String startDate;
 	    private String endDate;
 	    private Integer version;
+	    private String intermediateCertificate;
 	    
 }

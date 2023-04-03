@@ -51,6 +51,7 @@ public class Csr {
     private Date endDate;
     private String alias;
     private Integer version;
+    private String intermediateCertificate;
     
     private RequestStatus status;
     
@@ -74,6 +75,7 @@ public class Csr {
     	
     	alias = dto.getAlias();
     	version = dto.getVersion();
+    	intermediateCertificate = dto.getIntermediateCertificate();
     }
     
     public CsrDTO toDTO() {
@@ -99,6 +101,7 @@ public class Csr {
     	
     	dto.setAlias(alias);
     	dto.setVersion(version);
+    	dto.setIntermediateCertificate(intermediateCertificate);
     	return dto;
     }
 }

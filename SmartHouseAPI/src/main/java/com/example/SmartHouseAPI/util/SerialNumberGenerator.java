@@ -22,6 +22,6 @@ public class SerialNumberGenerator {
 	      System.arraycopy(timeBytes, 0, serialBytes, 0, timeBytes.length);
 	      System.arraycopy(randomBytes, 0, serialBytes, timeBytes.length, randomBytes.length);
 	      
-	      return new BigInteger(serialBytes).longValue();
+	      return Math.abs(new BigInteger(serialBytes).longValue());
 	   }
 }
