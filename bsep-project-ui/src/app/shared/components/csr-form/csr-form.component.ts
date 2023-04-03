@@ -64,6 +64,10 @@ export class CsrFormComponent implements OnInit {
         data.algorithm || 'SHA-512/RSA',
         Validators.required
       ),
+      intermediateCertificate: new FormControl(
+        data.intermediateCertificate || 'Sertifikat za korisnike',
+        Validators.required
+      ),
     });
   }
 

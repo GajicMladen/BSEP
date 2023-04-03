@@ -11,4 +11,5 @@ import java.util.List;
 public interface CsrRepository extends JpaRepository<Csr, Long> {
 
     List<Csr> findByStatus(RequestStatus state);
+    Csr findByAlias(String alias);
 }

@@ -149,6 +149,26 @@
             </mat-form-field>
           </td>
         </tr>
+        <tr>
+          <td>
+            <mat-radio-group formControlName="intermediateCertificate">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-evenly;
+                  margin-bottom: 16px;
+                "
+              >
+                <mat-radio-button [value]="'Sertifikat za korisnike'"
+                  >Za korisnike</mat-radio-button
+                >
+                <mat-radio-button [value]="'Sertifikat za računare'"
+                  >Za računare</mat-radio-button
+                >
+              </div>
+            </mat-radio-group>
+          </td>
+        </tr>
       </ng-container>
       <br />
       <tr *ngIf="!previewMode || (previewMode && certificateMode)">

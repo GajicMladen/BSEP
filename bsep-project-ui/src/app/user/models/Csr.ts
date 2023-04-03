@@ -15,4 +15,5 @@ export interface Csr {
   endDate: Date;
   version: number;
   alias: string;
+  intermediateCertificate: string;
 }
