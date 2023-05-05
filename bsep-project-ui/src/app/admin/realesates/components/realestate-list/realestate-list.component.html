@@ -1,0 +1,6 @@
+
+<div *ngFor="let rs of realesatets" class="item">
+    <mat-checkbox *ngIf="addingNewRealestates" (change)="onChange(rs!.id)" [checked]="addedRealestaeIDs[rs!.id]"> </mat-checkbox>
+    <div *ngIf="!addingNewRealestates"></div>
+    <app-realestate-item [realestate]="rs"></app-realestate-item>
+</div>

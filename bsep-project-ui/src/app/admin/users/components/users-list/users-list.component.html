@@ -1,0 +1,43 @@
+<div class="all">
+    <div class="users">
+        <h2>Korisnici</h2>
+        <div *ngFor="let user of users" class="user">
+            <app-user-profile [user]="user" (click)="selectUser(user)" (userDeletedEmiter)="restartUsers()"></app-user-profile>
+            <button mat-raised-button (click)="addNewRealestates(user)">
+                    <fa-icon
+                    [icon]="faPlus"
+                    class="fa-3x"
+                    style="color: darkgreen"
+                    matTooltip="Dodaj mu nekretninu"
+                    ></fa-icon>
+            </button>
+        </div>
+    </div>
+    <div class="realestates">
+        <h2> {{selectedUser?.name}} {{selectedUser?.lastName}}</h2>
+        <div class="role" *ngIf="selectedUser">
+            <h3 class="roommate " [ngClass]="{'active' : !isOwner}">
+                Stanar
+            </h3>
+            <mat-slide-toggle (change)="changeUserRole()" [checked]="isOwner"></mat-slide-toggle>
+            <h3 class="owner" [ngClass]="{'active' : isOwner}">
+                Vlasnik
+            </h3>
+        </div>
+        
+        <h2 *ngIf="addingNewRealestates" > Odaberite nekretnine koje zelite do dodelite</h2>
+        <h2 *ngIf="!addingNewRealestates"> Nekretnine korisnika</h2>
+        <div class="rls">  
+            <app-realestate-list [realesatets]="realesatets" [addingNewRealestates]="addingNewRealestates"></app-realestate-list>
+            
+            <button mat-raised-button *ngIf="addingNewRealestates" (click)="updateRealestates()" >Sacuvaj 
+                <fa-icon
+                [icon]="faCheckCircle"
+                class="fa-3x"
+                style="color:green">
+    
+                </fa-icon>
+            </button>
+        </div>
+    </div>
+</div>

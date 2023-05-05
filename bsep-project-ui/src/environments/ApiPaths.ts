@@ -1,4 +1,6 @@
 export enum ApiPaths {
   Csr = 'csr',
-  Certificate = "certificate"
+  Certificate = "certificate",
+  Usres = "users",
+  Realestates = "realestates"
 }
