@@ -7,6 +7,8 @@ import {
 } from 'src/app/shared/services/message.service';
 import { RegistrationService } from 'src/app/shared/services/registration.service';
 import { passwordCharactersValidator } from 'src/app/shared/validators/validators';
+import { CredentialsDTO } from '../../models/CredentialsDTO';
+import { LoginService } from 'src/app/shared/services/login.service';
 
 @Component({
   selector: 'app-change-credentials',
@@ -18,6 +20,7 @@ export class ChangeCredentialsComponent implements OnInit, OnDestroy {
   form: FormGroup = this.createCredentialsForm();
 
   constructor(
+    private userService: LoginService,
     private registrationService: RegistrationService,
     private messageService: MessageService
   ) {}
@@ -57,8 +60,10 @@ export class ChangeCredentialsComponent implements OnInit, OnDestroy {
   }
 
   sendChangeRequest() {
+    let data: CredentialsDTO = this.form.getRawValue();
+    data.email = this.userService.user!.email;
     this.registrationService
-      .sendChangeCredentialsRequest(this.form.getRawValue())
+      .sendChangeCredentialsRequest(data)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {

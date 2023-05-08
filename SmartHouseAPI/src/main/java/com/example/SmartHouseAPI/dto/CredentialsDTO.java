@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class CredentialsDTO {
 
+	String email;
 	String oldPassword;
 	String oldPin;
 	String newPassword;

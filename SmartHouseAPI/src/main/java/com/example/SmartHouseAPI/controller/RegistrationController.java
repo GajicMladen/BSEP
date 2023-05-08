@@ -61,26 +61,32 @@ public class RegistrationController {
 	}
 	
 	@PostMapping("/changeCredentials")
-	public ResponseEntity<?> changeCredentials(@RequestBody CredentialsDTO credentialsDTO, Principal u) {
+	public ResponseEntity<?> changeCredentials(@RequestBody CredentialsDTO credentialsDTO) {
 		Gson gson = new Gson();
-		User user = userService.findByEmail(u.getName());
+		User u = userService.findByEmail(credentialsDTO.getEmail());
 		
-		String encodedNewPass = passEncoder.encode(credentialsDTO.getOldPassword());
-		
-		if (!user.getPassword().equals(encodedNewPass))
+		if (!passEncoder.matches(credentialsDTO.getOldPassword(), u.getPassword()))
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(gson.toJson(new ErrMsg("Neispravna lozinka!")));
 		
-		if (!user.getPin().equals(credentialsDTO.getOldPin()))
+		if (!u.getPin().equals(credentialsDTO.getOldPin()))
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(gson.toJson(new ErrMsg("Neispravan PIN!")));
 		
-		if (!validatorService.validatePassword(credentialsDTO.getNewPassword()) || !validatorService.validatePin(credentialsDTO.getNewPin()))
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(gson.toJson(new ErrMsg("Novi kredencijali su neispravni!")));
+		String newPass = credentialsDTO.getNewPassword();
+		String newPin = credentialsDTO.getNewPin();
 		
-		if (validatorService.isCommonPassword(credentialsDTO.getNewPassword()))
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(gson.toJson(new ErrMsg("Nova lozinka se nalazi u listi najčešće korišćenih!")));
+		if (!newPass.equals("")) {
+			if (!validatorService.validatePassword(newPass))
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(gson.toJson(new ErrMsg("Nova lozinka je neispravna!")));
+			u.setPassword(passEncoder.encode(credentialsDTO.getNewPassword()));
+		}
+		
+		if (!newPin.equals("")) {
+			if (validatorService.isCommonPassword(credentialsDTO.getNewPassword()))
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(gson.toJson(new ErrMsg("Nova lozinka se nalazi u listi najčešće korišćenih!")));
+			u.setPin(credentialsDTO.getNewPin());
+		}
 	
-		user.setPassword(encodedNewPass);
-		user.setPin(credentialsDTO.getNewPin());
+		userService.save(u);
 		return ResponseEntity.ok(null);
 	}
 }
