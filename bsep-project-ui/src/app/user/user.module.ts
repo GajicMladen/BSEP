@@ -4,9 +4,10 @@ import { CsrFormComponent } from '../shared/components/csr-form/csr-form.compone
 import { UserRoutingModule } from './user-routing.module';
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ChangeCredentialsComponent } from './components/change-credentials/change-credentials.component';
 
 @NgModule({
-  declarations: [CsrFormComponent],
+  declarations: [CsrFormComponent, ChangeCredentialsComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
