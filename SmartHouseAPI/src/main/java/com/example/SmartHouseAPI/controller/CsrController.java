@@ -16,7 +16,7 @@ import com.example.SmartHouseAPI.enums.RequestStatus;
 import com.example.SmartHouseAPI.model.Csr;
 import com.example.SmartHouseAPI.service.CsrService;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
