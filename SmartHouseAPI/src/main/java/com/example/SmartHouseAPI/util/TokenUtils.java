@@ -313,7 +313,6 @@ public class TokenUtils {
 	                && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate()); // nakon kreiranja tokena korisnik nije menjao svoju lozinku
 
 	        // Validiranje fingerprint-a
-	        System.out.println("FGP ===> " + fingerprint);
 	        boolean isFingerprintValid = false;
 	        boolean isAlgorithmValid = false;
 	        if (fingerprint != null) {

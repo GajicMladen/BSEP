@@ -52,7 +52,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             );
           },
           error: (err) => {
-            console.log(err);
+            this.messageService.showMessage(
+              err.error.message,
+              MessageType.ERROR
+            );
           },
         });
     }
