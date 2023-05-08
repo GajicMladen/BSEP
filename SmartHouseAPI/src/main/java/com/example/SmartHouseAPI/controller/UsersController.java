@@ -1,13 +1,19 @@
 package com.example.SmartHouseAPI.controller;
 
-import com.example.SmartHouseAPI.model.User;
-import com.example.SmartHouseAPI.service.UsersService;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.example.SmartHouseAPI.dto.UserDTO;
+import com.example.SmartHouseAPI.model.User;
+import com.example.SmartHouseAPI.service.UsersService;
 
 @RestController
 @RequestMapping("/users")
@@ -19,9 +25,12 @@ public class UsersController {
 
 
     @GetMapping(path = "/all")
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
         List<User> users = usersService.getAll();
-        return ResponseEntity.ok(users);
+        List<UserDTO> dtos = new ArrayList<UserDTO>();
+        for(User u: users)
+        	dtos.add(new UserDTO(u));
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping(path = "/delete/{id}")

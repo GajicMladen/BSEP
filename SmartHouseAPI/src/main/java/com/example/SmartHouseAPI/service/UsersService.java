@@ -68,7 +68,7 @@ public class UsersService implements UserDetailsService {
     	user.setPin(pin);
     	
 		List<Role> roles = new ArrayList<Role>();
-		roles.add(roleService.findByName("ROLE_USER"));
+		roles.add(roleService.findByName(registrationDTO.getRole()));
 		user.setRoles(roles);
 		
 		emailService.sendRegistrationEmail(user.getEmail(), password, pin);
@@ -100,17 +100,23 @@ public class UsersService implements UserDetailsService {
     }
 
     public boolean changeUserRole(Long userID){
-//        Optional<User> user = usersRepository.findById(userID);
-//        if(user.isPresent()){
-//            if(user.get().getRole() == UserRole.OWNER)
-//                user.get().setRole(UserRole.USER);
-//            else if( user.get().getRole() == UserRole.USER)
-//                user.get().setRole(UserRole.OWNER);
-//
-//            usersRepository.save(user.get());
-//            return true;
-//        }
-//        return false;
-    	return true;
+        Optional<User> user = usersRepository.findById(userID);
+        if(user.isPresent()){
+        	User u = user.get();
+            if(u.hasRole("ROLE_OWNER")) {
+            	List<Role> newRoles = new ArrayList<Role>();
+            	newRoles.add(roleService.findByName("ROLE_USER"));
+            	u.setRoles(newRoles);
+            }
+            else if(u.hasRole("ROLE_USER")) {
+            	List<Role> newRoles = new ArrayList<Role>();
+            	newRoles.add(roleService.findByName("ROLE_OWNER"));
+            	u.setRoles(newRoles);
+            }
+
+            usersRepository.save(user.get());
+            return true;
+        }
+        return false;
     }
 }

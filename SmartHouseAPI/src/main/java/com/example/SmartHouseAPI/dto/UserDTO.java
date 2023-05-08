@@ -14,12 +14,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDTO {
 
+	Long id;
 	String firstName;
 	String lastName;
 	String email;
 	List<String> roles;
 	
 	public UserDTO(User u) {
+		this.id = u.getId();
 		this.firstName = u.getName();
 		this.lastName = u.getLastName();
 		this.email = u.getEmail();

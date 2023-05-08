@@ -18,17 +18,17 @@ INSERT INTO user_role(user_id, role_id) VALUES (2, 1);
 INSERT INTO user_role(user_id, role_id) VALUES (3, 2);
 INSERT INTO user_role(user_id, role_id) VALUES (4, 3);
 -- DJIMLINO
---insert into realestate(address, area)
---        values('Janka cmelika 1','50');
---insert into realestate(address, area)
---        values('Veselina Maslese 2','102');
---insert into realestate(address, area)
---        values('Dr Ivana Ribara 13','89');
---insert into realestate(address, area)
---        values('Bulevar Cara Lazara 7a','10');
+insert into realestate(address, area)
+        values('Janka cmelika 1','50');
+insert into realestate(address, area)
+        values('Veselina Maslese 2','102');
+insert into realestate(address, area)
+        values('Dr Ivana Ribara 13','89');
+insert into realestate(address, area)
+        values('Bulevar Cara Lazara 7a','10');
 --
---insert into user_realestates(user_id,realestate_id) values (1,1);
---insert into user_realestates(user_id,realestate_id) values (2,2);
---insert into user_realestates(user_id,realestate_id) values (3,3);
---insert into user_realestates(user_id,realestate_id) values (4,4);
---insert into user_realestates(user_id,realestate_id) values (5,1);
+insert into user_realestates(user_id,realestate_id) values (4,1);
+insert into user_realestates(user_id,realestate_id) values (4,2);
+insert into user_realestates(user_id,realestate_id) values (4,3);
+insert into user_realestates(user_id,realestate_id) values (3,4);
+insert into user_realestates(user_id,realestate_id) values (3,1);

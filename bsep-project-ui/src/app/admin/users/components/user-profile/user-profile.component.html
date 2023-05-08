@@ -1,26 +1,25 @@
 <mat-card class="item">
-    <!-- <h1>{{ csrRequest.email }}</h1> -->
-    <div>
-        <h2>{{user!.name}} {{user!.lastName}}</h2>
-        <h3>{{user!.email}}</h3>
-    </div>
-    <div class="actions">
-      <fa-icon
-        [icon]="faMagnifyingGlass"
-        class="fa-3x"
-        style="color: darkslategray"
-        matTooltip="Pregled profila"
-        (click)="openPreviewDialog()"
-      >
-      </fa-icon>
-      <fa-icon
-        [icon]="faX"
-        class="fa-3x"
-        style="color: darkred"
-        matTooltip="Obrisi korisnika"
-        (click)="deletUser(user!.id)"
-      >
-      </fa-icon>
-    </div>
-  </mat-card>
-  
+  <!-- <h1>{{ csrRequest.email }}</h1> -->
+  <div>
+    <h2>{{ user!.firstName }} {{ user!.lastName }}</h2>
+    <h3>{{ user!.email }}</h3>
+  </div>
+  <div class="actions">
+    <fa-icon
+      [icon]="faMagnifyingGlass"
+      class="fa-3x"
+      style="color: darkslategray"
+      matTooltip="Pregled profila"
+      (click)="openPreviewDialog()"
+    >
+    </fa-icon>
+    <fa-icon
+      [icon]="faX"
+      class="fa-3x"
+      style="color: darkred"
+      matTooltip="Obrisi korisnika"
+      (click)="deletUser(user!.id)"
+    >
+    </fa-icon>
+  </div>
+</mat-card>
