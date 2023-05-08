@@ -17,6 +17,17 @@ INSERT INTO user_role(user_id, role_id) VALUES (1, 1);
 INSERT INTO user_role(user_id, role_id) VALUES (2, 1);
 INSERT INTO user_role(user_id, role_id) VALUES (3, 2);
 INSERT INTO user_role(user_id, role_id) VALUES (4, 3);
+
+INSERT INTO PRIVILEGE (name) VALUES ('READ_USER');
+INSERT INTO PRIVILEGE (name) VALUES ('READ_USERS');
+INSERT INTO PRIVILEGE (name) VALUES ('CHANGE_USER_ROLE');
+INSERT INTO PRIVILEGE (name) VALUES ('DELETE_USER');
+
+INSERT INTO ROLE_PRIVILEGE (role_id, privilege_id) VALUES (2, 1);
+INSERT INTO ROLE_PRIVILEGE (role_id, privilege_id) VALUES (2, 2);
+INSERT INTO ROLE_PRIVILEGE (role_id, privilege_id) VALUES (2, 3);
+INSERT INTO ROLE_PRIVILEGE (role_id, privilege_id) VALUES (2, 4);
+
 -- DJIMLINO
 --insert into realestate(address, area)
 --        values('Janka cmelika 1','50');
