@@ -28,18 +28,16 @@ INSERT INTO ROLE_PRIVILEGE (role_id, privilege_id) VALUES (2, 2);
 INSERT INTO ROLE_PRIVILEGE (role_id, privilege_id) VALUES (2, 3);
 INSERT INTO ROLE_PRIVILEGE (role_id, privilege_id) VALUES (2, 4);
 
--- DJIMLINO
---insert into realestate(address, area)
---        values('Janka cmelika 1','50');
---insert into realestate(address, area)
---        values('Veselina Maslese 2','102');
---insert into realestate(address, area)
---        values('Dr Ivana Ribara 13','89');
---insert into realestate(address, area)
---        values('Bulevar Cara Lazara 7a','10');
---
---insert into user_realestates(user_id,realestate_id) values (1,1);
---insert into user_realestates(user_id,realestate_id) values (2,2);
---insert into user_realestates(user_id,realestate_id) values (3,3);
---insert into user_realestates(user_id,realestate_id) values (4,4);
---insert into user_realestates(user_id,realestate_id) values (5,1);
+insert into realestate(address, area)
+       values('Janka cmelika 1','50');
+insert into realestate(address, area)
+       values('Veselina Maslese 2','102');
+insert into realestate(address, area)
+       values('Dr Ivana Ribara 13','89');
+insert into realestate(address, area)
+       values('Bulevar Cara Lazara 7a','10');
+
+insert into user_realestates(user_id,realestate_id) values (1,1);
+insert into user_realestates(user_id,realestate_id) values (2,2);
+insert into user_realestates(user_id,realestate_id) values (3,3);
+insert into user_realestates(user_id,realestate_id) values (4,4);
