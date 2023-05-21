@@ -1,0 +1,16 @@
+version: "3"
+services:
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra
+    hostname: cassandra
+    ports:
+      - 9042:9042
+      - 7000:7000
+      - 7001:7001
+      - 7199:7199
+      - 9160:9160
+    user: cassandra
+    volumes:
+      - ./migracije:/migracije
+    command: sh -c 'cassandra -f & until cqlsh -e "DESCRIBE KEYSPACES"; do sleep 10; done && cqlsh -f /migracije/initial.cql && tail -f /dev/null'

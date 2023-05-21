@@ -22,7 +22,9 @@ public class Realestate {
     @ManyToMany(mappedBy = "realestates")
     List<User> users;
 
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "realestate")
+    private List<Device> devices;
 
     public String getAddress() {
         return address;

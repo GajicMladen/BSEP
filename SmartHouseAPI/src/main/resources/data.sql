@@ -21,7 +21,17 @@ insert into realestate(address, area)
 
 
 insert into user_realestates(user_id,realestate_id) values (1,1);
+insert into user_realestates(user_id,realestate_id) values (1,2);
 insert into user_realestates(user_id,realestate_id) values (2,2);
 insert into user_realestates(user_id,realestate_id) values (3,3);
 insert into user_realestates(user_id,realestate_id) values (4,4);
 insert into user_realestates(user_id,realestate_id) values (5,1);
+
+INSERT INTO public.device(description, device_type, read_data, realestate_id)
+	VALUES ( 'temperatura u dnevnoj sobi', 0, true, 1);
+INSERT INTO public.device(description, device_type, read_data, realestate_id)
+	VALUES ( 'kamera u dvoristu', 1, true, 1);
+INSERT INTO public.device(description, device_type, read_data, realestate_id)
+	VALUES ( 'ulazna vrata', 2, true, 1);
+INSERT INTO public.device(description, device_type, read_data, realestate_id)
+	VALUES ( 'temperatura u kuhinji', 0, true, 2);
