@@ -14,6 +14,8 @@ public class EmailService {
 	
 	private String CERTIFICATE_CREATED_SUBJECT = "Kreacija Sertifikata";
 
+	private String REGISTRATION_SUBJECT = "SmartHouse Registracija";
+	
 	public void sendSimpleMessage(String to, String subject, String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom("gofishingteam7@gmail.com");
@@ -33,5 +35,15 @@ public class EmailService {
 		confirmationBody += privateKey;
 
 		sendSimpleMessage(email, CERTIFICATE_CREATED_SUBJECT, confirmationBody);
+	}
+	
+	public void sendRegistrationEmail(String email, String password, String pin) {
+		String body = "Poštovani, \n";
+		body += "Pristigao je zahtev za registraciju Vašeg naloga na SmartHouse! \n";
+		body += "Predefinisana lozinka za Vas je: " + password + "\n";
+		body += "Vaš PIN je: " + pin + "\n";
+		body += "Potrebno je da izvršite izmenu kredencijala sa korisničkog profila u najskorijem roku!\n\n";
+		body += "SmartHouse Tim";
+		sendSimpleMessage(email, REGISTRATION_SUBJECT, body);
 	}
 }

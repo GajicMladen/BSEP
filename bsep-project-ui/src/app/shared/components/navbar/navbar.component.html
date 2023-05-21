@@ -1,25 +1,47 @@
 <mat-toolbar color="primary">
-  <button mat-button class="menu-button" [matMenuTriggerFor]="adminMenu">
-    Admin
-  </button>
-  <mat-menu #adminMenu="matMenu">
-    <button mat-menu-item [routerLink]="['admin/csr-pending']">
-      Neobrađeni zahtevi
+  <div style="display: flex; gap: 16px">
+    <button
+      mat-button
+      class="menu-button"
+      [matMenuTriggerFor]="adminMenu"
+      *ngIf="isLogged && userRole === Role.ADMIN"
+    >
+      Admin Opcije
     </button>
-    <button mat-menu-item [routerLink]="['admin/csr-all']">
-      Svi sertifikati
-    </button>
-    <button mat-menu-item [routerLink]="['admin/users-all']">
-      Svi korisnici
-    </button>
-  </mat-menu>
+    <mat-menu #adminMenu="matMenu">
+      <button mat-menu-item [routerLink]="['admin/csr-pending']">
+        Neobrađeni zahtevi
+      </button>
+      <button mat-menu-item [routerLink]="['admin/csr-all']">
+        Svi sertifikati
+      </button>
+      <button mat-menu-item [routerLink]="['admin/add-new-user']">
+        Dodaj korisnika
+      </button>
+      <button mat-menu-item [routerLink]="['admin/users-all']">
+        Svi korisnici
+      </button>
+    </mat-menu>
 
-  <button mat-button class="menu-button" [matMenuTriggerFor]="userMenu">
-    User
-  </button>
-  <mat-menu #userMenu="matMenu">
-    <button mat-menu-item [routerLink]="['user/csr-request']">
-      Zahtev za sertifikat
+    <button
+      mat-button
+      class="menu-button"
+      [matMenuTriggerFor]="userMenu"
+      *ngIf="isLogged && userRole === Role.USER"
+    >
+      Korisničke Opcije
     </button>
-  </mat-menu>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item [routerLink]="['user/csr-request']">
+        Zahtev za sertifikat
+      </button>
+      <button mat-menu-item [routerLink]="['user/change-credentials']">
+        Promena kredencijala
+      </button>
+    </mat-menu>
+  </div>
+
+  <button mat-button class="menu-button" *ngIf="isLogged" (click)="logout()">
+    Odjava
+  </button>
 </mat-toolbar>

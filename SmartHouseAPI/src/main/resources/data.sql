@@ -1,15 +1,23 @@
-insert into users(email,name,lastName,password,pin,role)
-        values ('mladengajic00@gmail.com','Mladen','Gajic','aa','11',1);
-insert into users(email,name,lastName,password,pin,role)
-        values ('djosa@gmail.com','Djordje','Jovanovic','bb','22',2);
-insert into users(email,name,lastName,password,pin,role)
-        values ('jovan@gmail.com','Jovan','Tomic','cc','33',2);
-insert into users(email,name,lastName,password,pin,role)
-        values ('dzoni@gmail.com','Nikola','Nikolic','ss','44',2);
-insert into users(email,name,lastName,password,pin,role)
-        values ('marko@gmail.com','Marko','Markovic','ff','55',2);
 
+-- USERS
+INSERT INTO users(email, name, lastName, password, pin, active, unsuccessful_login_attempts)
+	VALUES ('jtomic1@gmail.com', 'Jovan', 'Tomic', 'Test', '1234', true, 0);
+INSERT INTO users(email, name, lastName, password, pin, active, unsuccessful_login_attempts)
+	VALUES ('p3r5kul45@gmail.com', 'Marko', 'Markovic', '$2a$10$JnSPxBt53ivBH7Youw9lVu7WU5M87GNNGG0puQkOihPyDaTV.S9wu', '1028', true, 0);
+INSERT INTO users(email, name, lastName, password, pin, active, unsuccessful_login_attempts)
+	VALUES ('jtomic@gmail.com', 'Nikola', 'Nikolic', '$2a$10$JnSPxBt53ivBH7Youw9lVu7WU5M87GNNGG0puQkOihPyDaTV.S9wu', '1028', true, 0);
+INSERT INTO users(email, name, lastName, password, pin, active, unsuccessful_login_attempts)
+	VALUES ('djimla@gmail.com', 'Djimla', 'Djimlic', '$2a$10$JnSPxBt53ivBH7Youw9lVu7WU5M87GNNGG0puQkOihPyDaTV.S9wu', '1028', true, 0);
+-- ROLES
+INSERT INTO role(name) VALUES('ROLE_USER');
+INSERT INTO role(name) VALUES('ROLE_ADMIN');
+INSERT INTO role(name) VALUES('ROLE_OWNER');
 
+INSERT INTO user_role(user_id, role_id) VALUES (1, 1);
+INSERT INTO user_role(user_id, role_id) VALUES (2, 1);
+INSERT INTO user_role(user_id, role_id) VALUES (3, 2);
+INSERT INTO user_role(user_id, role_id) VALUES (4, 3);
+-- DJIMLINO
 insert into realestate(address, area)
         values('Janka cmelika 1','50');
 insert into realestate(address, area)
@@ -19,13 +27,11 @@ insert into realestate(address, area)
 insert into realestate(address, area)
         values('Bulevar Cara Lazara 7a','10');
 
-
-insert into user_realestates(user_id,realestate_id) values (1,1);
-insert into user_realestates(user_id,realestate_id) values (1,2);
-insert into user_realestates(user_id,realestate_id) values (2,2);
-insert into user_realestates(user_id,realestate_id) values (3,3);
-insert into user_realestates(user_id,realestate_id) values (4,4);
-insert into user_realestates(user_id,realestate_id) values (5,1);
+insert into user_realestates(user_id,realestate_id) values (4,1);
+insert into user_realestates(user_id,realestate_id) values (4,2);
+insert into user_realestates(user_id,realestate_id) values (4,3);
+insert into user_realestates(user_id,realestate_id) values (3,4);
+insert into user_realestates(user_id,realestate_id) values (3,1);
 
 INSERT INTO public.device(description, device_type, read_data, realestate_id)
 	VALUES ( 'temperatura u dnevnoj sobi', 0, true, 1);

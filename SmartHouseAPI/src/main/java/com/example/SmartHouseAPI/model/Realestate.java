@@ -1,7 +1,7 @@
 package com.example.SmartHouseAPI.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.List;
 
