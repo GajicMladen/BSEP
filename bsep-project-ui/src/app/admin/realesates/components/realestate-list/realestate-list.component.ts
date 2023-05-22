@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Realestate } from 'src/app/user/models/Realestate';
-import { RealestatesService } from '../../services/realestates.service';
+import { Realestate } from 'src/app/shared/models/Realestate';
+import { RealestatesService } from '../../../../shared/services/realestates.service';
 import {
   faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
@@ -27,10 +27,9 @@ export class RealestateListComponent implements OnInit {
     this.addedRealestaeIDs = {};
   }
 
-  onChange(realestateID:string){
+  onChange(realestateID:number){
 
     this.addedRealestaeIDs[realestateID] = !this.addedRealestaeIDs[realestateID];
-    console.log(this.addedRealestaeIDs);
   }
 
   getSelectedRealestates(){

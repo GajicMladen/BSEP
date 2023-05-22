@@ -1,0 +1,17 @@
+<form [formGroup]="form">
+    <mat-form-field>
+        <mat-label>Tip uređaja</mat-label>
+        <mat-select formControlName="deviceType">
+          <mat-option [value]="'TEMPERATURE'">Senzor za temperaturu </mat-option>
+          <mat-option [value]="'DOOR_OPEN'">Senzor za vrata</mat-option>
+          <mat-option [value]="'CAMERA_MOTION'">Detektor pokreta na kamerama </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Opis uredjaja</mat-label>
+        <input matInput formControlName="deviceDescription">
+    </mat-form-field>
+
+    <button mat-raised-button type="button" (click)="addNewDevice()" > Dodaj</button>
+</form>

@@ -59,6 +59,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/admin/add-new-user');
     else if (this.loginService.user?.roles[0] === Role.USER)
       this.router.navigateByUrl('/user/change-credentials');
+    else if (this.loginService.user?.roles[0] === Role.OWNER)
+      this.router.navigateByUrl('/owner/devices');
   }
 
   ngOnDestroy(): void {

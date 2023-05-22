@@ -1,0 +1,25 @@
+.realestates{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10px;
+}
+
+.devices{
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.name{
+    display: flex;    
+    align-items: center;
+    gap: 30px;
+}
+.all-logs{
+    position: absolute;
+    right: 15px;
+}

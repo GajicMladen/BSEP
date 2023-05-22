@@ -1,7 +1,9 @@
 package com.example.SmartHouseAPI.model;
 
 import com.example.SmartHouseAPI.enums.DeviceType;
-import jakarta.persistence.*;
+
+import javax.persistence.*;
+
 
 @Entity
 public class Device {

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Realestate } from 'src/app/user/models/Realestate';
+import { Realestate } from 'src/app/shared/models/Realestate';
 import {
   faCheck,
   faMagnifyingGlass,

@@ -1,5 +1,5 @@
 export interface Realestate{
-    id:string,
+    id:number,
     address:string,
     area:string 
 }

@@ -1,0 +1,33 @@
+<mat-card >
+    <div class="main-part">
+        <fa-icon
+        *ngIf="device!.deviceType == 'TEMPERATURE'"
+        [icon]="faTemperature"
+        class="fa-5x"
+        style="color: darkslategray"></fa-icon>
+        <fa-icon
+        *ngIf="device!.deviceType == 'CAMERA_MOTION'"
+        [icon]="faVideo"
+        class="fa-5x"
+        style="color: darkslategray"></fa-icon>
+    
+        <fa-icon
+        *ngIf="device!.deviceType == 'DOOR_OPEN'"
+        [icon]="faDoorOpen"
+        class="fa-5x"
+        style="color: darkslategray"></fa-icon>
+        <div>
+            {{device!.description}}
+        </div>
+        
+    </div>
+    <div>
+        <div class="device-notifications">
+            <mat-slide-toggle [checked]="device!.readData" (change)="turnOnOfNotification()">
+            </mat-slide-toggle>
+            <fa-icon [icon]="faBell" class="fa-2x" [ngClass]="{ active: device!.readData , inactive : ! device!.readData}"></fa-icon>
+        </div>
+        <fa-icon [icon]="faList" class="device-logs fa-2x"
+        matTooltip="Logovi uredjaja"></fa-icon>
+    </div>
+</mat-card>

@@ -44,4 +44,10 @@ public class RealestateService {
         }
         return false;
     }
+
+    public Realestate getByID(Long realestateID){
+        Optional<Realestate> realestate =this.realestateRepository.findById(realestateID);
+        return realestate.orElse(null);
+    }
+
 }

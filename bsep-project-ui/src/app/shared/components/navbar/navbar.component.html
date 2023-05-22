@@ -39,6 +39,27 @@
         Promena kredencijala
       </button>
     </mat-menu>
+
+    
+    <button
+      mat-button
+      class="menu-button"
+      [matMenuTriggerFor]="ownerMenu"
+      *ngIf="isLogged && userRole === Role.OWNER"
+    >
+      Vlasničke Opcije
+    </button>
+    <mat-menu #ownerMenu="matMenu">
+      <button mat-menu-item [routerLink]="['owner/devices']">
+        Svi uređaji
+      </button>
+      <button mat-menu-item [routerLink]="['owner/logs']">
+        Logovi
+      </button>
+      <button mat-menu-item [routerLink]="['owner/alarmi']">
+        Alarmi
+      </button>
+    </mat-menu>
   </div>
 
   <button mat-button class="menu-button" *ngIf="isLogged" (click)="logout()">

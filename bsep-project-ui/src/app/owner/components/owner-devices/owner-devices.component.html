@@ -1,0 +1,17 @@
+<div class="realestates">
+    <mat-card *ngFor="let r of realestates" >
+        <div class="name">
+            <fa-icon [icon]="faHome" class="fa-2x" ></fa-icon>
+            {{r.address}}
+            <fa-icon [icon]="faListAlt" class="fa-2x all-logs"
+            matTooltip="Svi logovi"></fa-icon>
+        </div>
+        <div class="devices">
+            <app-device *ngFor="let device of devices[r.id]" [device]="device" ></app-device>
+            <mat-card *ngIf="devices[r.id] && devices[r.id].length < 5" (click)="addNewDevice(r.id)">
+                <fa-icon [icon]="faPlusCircle" class="fa-5x" style="color:darkgray ;cursor:pointer;"  matTooltip="Dodja novi uređaj (5 max)"></fa-icon>
+            </mat-card>
+        </div>
+        
+    </mat-card>
+</div>

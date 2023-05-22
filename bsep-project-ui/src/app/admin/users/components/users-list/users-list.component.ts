@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RealestatesService } from 'src/app/admin/realesates/services/realestates.service';
-import { Realestate } from 'src/app/user/models/Realestate';
+import { RealestatesService } from 'src/app/shared/services/realestates.service';
+import { Realestate } from 'src/app/shared/models/Realestate';
 import { UserService } from '../../services/user.service';
 import {
   faCheck,

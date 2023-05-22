@@ -25,6 +25,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
   },
+  {
+    path: 'owner',
+    loadChildren: () =>
+      import('./owner/owner.module').then((m) => m.OwnerModule),
+  },
 ];
 
 @NgModule({
