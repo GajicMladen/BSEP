@@ -5,11 +5,11 @@ import com.example.SmartHouseAPI.dto.LogSendDTO;
 import com.example.SmartHouseAPI.dto.LogsSerachDTO;
 import com.example.SmartHouseAPI.model.Log;
 import com.example.SmartHouseAPI.service.LogsService;
+import com.example.SmartHouseAPI.service.AlarmNotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,10 +19,13 @@ public class LogsController {
     @Autowired
     private LogsService logsService;
 
+    @Autowired
+    private AlarmNotificationService alarmNotificationService;
 
     @GetMapping("/all")
     public ResponseEntity<?> getAll(){
         List<LogSendDTO> logs = this.logsService.getAll();
+        this.alarmNotificationService.pushAlarm("ide gas");
         return ResponseEntity.ok(logs);
     }
 

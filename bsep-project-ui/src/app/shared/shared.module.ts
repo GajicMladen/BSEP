@@ -8,9 +8,10 @@ import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LogsTableComponent } from './components/logs-table/logs-table.component';
+import { AlarmNotificationComponent } from './components/alarm-notification/alarm-notification.component';
 
 @NgModule({
-  declarations: [NavbarComponent, NavbarComponent, LoginComponent, RegistrationComponent, LogsTableComponent],
+  declarations: [NavbarComponent, NavbarComponent, LoginComponent, RegistrationComponent, LogsTableComponent, AlarmNotificationComponent],
   imports: [
     CommonModule,
     MaterialModule,
