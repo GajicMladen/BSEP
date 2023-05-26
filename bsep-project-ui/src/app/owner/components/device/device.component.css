@@ -25,7 +25,14 @@ mat-card{
 }
 
 .device-logs{
+    cursor: pointer;
     position: absolute;
     bottom: 10px;
     right: 15px;
+}
+.device-alarms{
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    right: 50px;
 }

@@ -5,5 +5,6 @@ export enum ApiPaths {
   Realestates = 'realestates',
   Register = 'reg',
   Auth = 'auth',
-  Devices = 'devices'
+  Devices = 'devices',
+  Logs = 'logs'
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LogsTableComponent } from '../shared/components/logs-table/logs-table.component';
 import { OwnerDevicesComponent } from './components/owner-devices/owner-devices.component';
 
 const routes: Routes = [
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path:'devices',
     component: OwnerDevicesComponent
+  },
+  {
+    path:'logs',
+    component:LogsTableComponent
   }
 ];
 

@@ -6,5 +6,7 @@ export interface Device{
     deviceType:DeviceType,
     readData :boolean,
     description: string,
-    realestate: Realestate
+    realestate: Realestate,
+    up_limit : number,
+    down_limit: number
 }

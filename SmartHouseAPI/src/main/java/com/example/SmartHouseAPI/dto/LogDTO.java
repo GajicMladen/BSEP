@@ -4,31 +4,31 @@ import java.time.LocalDateTime;
 
 public class LogDTO {
 
-    private String houseID;
-    private String deviceID;
+    private Long houseID;
+    private Long deviceID;
     private LocalDateTime exactTime;
     private float receivedValue;
 
-    public LogDTO(String houseID, String deviceID, LocalDateTime exactTime, float receivedValue) {
+    public LogDTO(Long houseID, Long deviceID, LocalDateTime exactTime, float receivedValue) {
         this.houseID = houseID;
         this.deviceID = deviceID;
         this.exactTime = exactTime;
         this.receivedValue = receivedValue;
     }
 
-    public String getHouseID() {
+    public Long getHouseID() {
         return houseID;
     }
 
-    public void setHouseID(String houseID) {
+    public void setHouseID(Long houseID) {
         this.houseID = houseID;
     }
 
-    public String getDeviceID() {
+    public Long getDeviceID() {
         return deviceID;
     }
 
-    public void setDeviceID(String deviceID) {
+    public void setDeviceID(Long deviceID) {
         this.deviceID = deviceID;
     }
 

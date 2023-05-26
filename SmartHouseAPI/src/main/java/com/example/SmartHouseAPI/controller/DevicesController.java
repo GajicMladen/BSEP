@@ -43,4 +43,10 @@ public class DevicesController {
         Device newDevice = this.deviceService.addNewDevice(newDeviceDTO,realestate);
         return ResponseEntity.ok().body(newDevice);
     }
+
+    @PostMapping(value = "/editAlarms")
+    public ResponseEntity<?> editAlarms(@RequestBody Device newDevice){
+        Device newD = this.deviceService.editAlarms(newDevice);
+        return ResponseEntity.ok().body(newD);
+    }
 }

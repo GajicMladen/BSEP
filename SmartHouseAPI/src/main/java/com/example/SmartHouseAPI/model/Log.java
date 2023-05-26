@@ -13,35 +13,47 @@ import java.time.LocalDateTime;
 public class Log{
 
     @PrimaryKeyColumn(name = "house_id",type = PrimaryKeyType.PARTITIONED,ordering = Ordering.ASCENDING)
-    private String houseID;
+    private Long houseID;
     @PrimaryKeyColumn(name = "device_id",type = PrimaryKeyType.CLUSTERED,ordering = Ordering.ASCENDING)
-    private String deviceID;
+    private Long deviceID;
     @PrimaryKeyColumn(name = "exact_time",type = PrimaryKeyType.CLUSTERED,ordering = Ordering.DESCENDING)
     private LocalDateTime exactTime;
 
     @Column("received_value")
     private float receivedValue;
 
-    public Log(String houseID, String deviceID, LocalDateTime exactTime, float receivedValue) {
+    @Column("is_alarm")
+    private boolean isAlarm;
+
+    public Log(Long houseID, Long deviceID, LocalDateTime exactTime, float receivedValue,boolean isAlarm) {
         this.houseID = houseID;
         this.deviceID = deviceID;
         this.exactTime = exactTime;
         this.receivedValue = receivedValue;
+        this.isAlarm = isAlarm;
     }
 
-    public String getHouseID() {
+    public boolean isAlarm() {
+        return isAlarm;
+    }
+
+    public void setAlarm(boolean alarm) {
+        isAlarm = alarm;
+    }
+
+    public Long getHouseID() {
         return houseID;
     }
 
-    public void setHouseID(String houseID) {
+    public void setHouseID(Long houseID) {
         this.houseID = houseID;
     }
 
-    public String getDeviceID() {
+    public Long getDeviceID() {
         return deviceID;
     }
 
-    public void setDeviceID(String deviceID) {
+    public void setDeviceID(Long deviceID) {
         this.deviceID = deviceID;
     }
 

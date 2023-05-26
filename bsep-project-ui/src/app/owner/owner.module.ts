@@ -7,6 +7,7 @@ import { MaterialModule } from '../material/material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NewDeviceComponent } from './components/new-device/new-device.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DeviceAlarmsComponent } from './components/device-alarms/device-alarms.component';
 
 
 
@@ -14,7 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     OwnerDevicesComponent,
     DeviceComponent,
-    NewDeviceComponent
+    NewDeviceComponent,
+    DeviceAlarmsComponent
   ],
   imports: [
     CommonModule,

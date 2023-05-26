@@ -1,0 +1,14 @@
+table{
+    width: 100%;
+}
+.alarm{
+    background-color: red;
+}
+form{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+}

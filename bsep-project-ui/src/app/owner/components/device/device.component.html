@@ -27,6 +27,8 @@
             </mat-slide-toggle>
             <fa-icon [icon]="faBell" class="fa-2x" [ngClass]="{ active: device!.readData , inactive : ! device!.readData}"></fa-icon>
         </div>
+        <fa-icon [icon]="faCog" class="device-alarms fa-2x" *ngIf="device!.deviceType == 'TEMPERATURE'"
+        matTooltip="Podesavanja alarma uredjaja" (click)="openAlarmSettings()"></fa-icon>
         <fa-icon [icon]="faList" class="device-logs fa-2x"
         matTooltip="Logovi uredjaja"></fa-icon>
     </div>

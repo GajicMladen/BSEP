@@ -7,9 +7,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { LogsTableComponent } from './components/logs-table/logs-table.component';
 
 @NgModule({
-  declarations: [NavbarComponent, NavbarComponent, LoginComponent, RegistrationComponent],
+  declarations: [NavbarComponent, NavbarComponent, LoginComponent, RegistrationComponent, LogsTableComponent],
   imports: [
     CommonModule,
     MaterialModule,

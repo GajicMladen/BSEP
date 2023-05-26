@@ -36,5 +36,9 @@ export class DevicesService {
     return this.http.post<Device>(url,newDeviceDTO);  
   }
 
+  public editAlarmValues(device:Device){
+    let url = this.url+"/editAlarms";
+    return this.http.post<Device>(url,device);    
+  }
 
 }
