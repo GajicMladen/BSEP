@@ -1,5 +1,5 @@
 uredjaj:
-  home: house1
-  device: device1
+  home: 1
+  device: 1
   interval: 5
   onof: false

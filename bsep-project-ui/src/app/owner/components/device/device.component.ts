@@ -47,8 +47,5 @@ export class DeviceComponent implements OnInit {
 
   openAlarmSettings(){
     const dialogRef = this.matDialog.open(DeviceAlarmsComponent,{data: this.device});
-    dialogRef.afterClosed().subscribe(result => {
-      this.messageService.showMessage("sacuvane promene",MessageType.SUCCESS);
-    });
   }
 }

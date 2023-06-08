@@ -4,31 +4,34 @@ import java.time.LocalDateTime;
 
 public class LogDTO {
 
-    private Long houseID;
-    private Long deviceID;
+    private Integer houseID;
+    private Integer deviceID;
     private LocalDateTime exactTime;
     private float receivedValue;
 
-    public LogDTO(Long houseID, Long deviceID, LocalDateTime exactTime, float receivedValue) {
+    public LogDTO() {
+    }
+
+    public LogDTO(Integer houseID, Integer deviceID, LocalDateTime exactTime, float receivedValue) {
         this.houseID = houseID;
         this.deviceID = deviceID;
         this.exactTime = exactTime;
         this.receivedValue = receivedValue;
     }
 
-    public Long getHouseID() {
+    public Integer getHouseID() {
         return houseID;
     }
 
-    public void setHouseID(Long houseID) {
+    public void setHouseID(Integer houseID) {
         this.houseID = houseID;
     }
 
-    public Long getDeviceID() {
+    public Integer getDeviceID() {
         return deviceID;
     }
 
-    public void setDeviceID(Long deviceID) {
+    public void setDeviceID(Integer deviceID) {
         this.deviceID = deviceID;
     }
 
@@ -46,5 +49,15 @@ public class LogDTO {
 
     public void setReceivedValue(float receivedValue) {
         this.receivedValue = receivedValue;
+    }
+
+    @Override
+    public String toString() {
+        return "LogDTO{" +
+                "houseID=" + houseID +
+                ", deviceID=" + deviceID +
+                ", exactTime=" + exactTime +
+                ", receivedValue=" + receivedValue +
+                '}';
     }
 }

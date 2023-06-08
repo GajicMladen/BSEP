@@ -23,11 +23,17 @@ public class Device {
 
 
     @Column(name = "up_limit")
-    private float up_limit;
+    private float upLimit;
 
 
     @Column(name = "down_limit")
-    private float down_limit;
+    private float downLimit;
+    
+    @Column(name = "occurrences_number")
+    private int occurrencesNumber;
+
+    @Column(name = "time_range_minutes")
+    private int timeRangeMinutes;
 
     @ManyToOne
     @JoinColumn(name = "realestate_id")
@@ -36,30 +42,48 @@ public class Device {
     public Device() {
     }
 
-    public Device(Long deviceID, DeviceType deviceType, boolean readData, String description, float up_limit, float down_limit, Realestate realestate) {
+    public Device(Long deviceID, DeviceType deviceType, boolean readData, String description, float upLimit, float downLimit, int occurrencesNumber, int timeRangeMinutes, Realestate realestate) {
         this.deviceID = deviceID;
         this.deviceType = deviceType;
         this.readData = readData;
         this.description = description;
-        this.up_limit = up_limit;
-        this.down_limit = down_limit;
+        this.upLimit = upLimit;
+        this.downLimit = downLimit;
+        this.occurrencesNumber = occurrencesNumber;
+        this.timeRangeMinutes = timeRangeMinutes;
         this.realestate = realestate;
     }
 
-    public float getUp_limit() {
-        return up_limit;
+    public int getOccurrencesNumber() {
+        return occurrencesNumber;
     }
 
-    public void setUp_limit(float up_limit) {
-        this.up_limit = up_limit;
+    public void setOccurrencesNumber(int occurrencesNumber) {
+        this.occurrencesNumber = occurrencesNumber;
     }
 
-    public float getDown_limit() {
-        return down_limit;
+    public int getTimeRangeMinutes() {
+        return timeRangeMinutes;
     }
 
-    public void setDown_limit(float down_limit) {
-        this.down_limit = down_limit;
+    public void setTimeRangeMinutes(int timeRangeMinutes) {
+        this.timeRangeMinutes = timeRangeMinutes;
+    }
+
+    public float getUpLimit() {
+        return upLimit;
+    }
+
+    public void setUpLimit(float upLimit) {
+        this.upLimit = upLimit;
+    }
+
+    public float getDownLimit() {
+        return downLimit;
+    }
+
+    public void setDownLimit(float downLimit) {
+        this.downLimit = downLimit;
     }
 
     public DeviceType getDeviceType() {

@@ -1,15 +1,16 @@
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import { AlarmNotificationComponent } from '../components/alarm-notification/alarm-notification.component';
+import { ComponentType } from '@angular/cdk/portal';
 
 export class WebSocketAPI {
   webSocketEndPoint: string = 'http://localhost:8080/api/ws';
-  topic: string = '/topic/greetings';
+  topic: string = '/topic/';
   stompClient: any;
-  appComponent: AlarmNotificationComponent;
+  appComponent: any ;
 
-  constructor(appComponent: AlarmNotificationComponent) {
+  constructor(appComponent:any,topic: string) {
     this.appComponent = appComponent;
+    this.topic += topic;
   }
 
   _connect() {

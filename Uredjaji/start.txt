@@ -1,0 +1,5 @@
+## aktivirati py okruzenje
+.\env\Scripts\activate
+
+##  kofigurisati yaml fajl u kofiguracije folderu 
+py ./pokreni_uredjaj.py u1

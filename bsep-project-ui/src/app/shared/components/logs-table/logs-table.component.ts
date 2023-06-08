@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy } from '@angular/core';
 import { LogDTO } from '../../models/LogDTO';
 import { LogsService } from '../../services/logs.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -9,16 +9,19 @@ import { RealestatesService } from '../../services/realestates.service';
 import { DevicesService } from '../../services/devices.service';
 import { LogSearchDTO } from '../../models/LogSearchDTO';
 import { JsonPipe } from '@angular/common';
+import { WebSocketAPI } from '../../websocket/web-socket-api';
 
 @Component({
   selector: 'app-logs-table',
   templateUrl: './logs-table.component.html',
   styleUrls: ['./logs-table.component.css'],
 })
-export class LogsTableComponent implements OnInit {
+export class LogsTableComponent implements OnInit,OnDestroy {
   logs: LogDTO[] = [];
   realestates: Realestate[] = [];
   devices: Device[] = [];
+  
+  webSocketAPI: WebSocketAPI | undefined;
   
   form = new FormGroup({
     realestate: new FormControl(),
@@ -44,7 +47,10 @@ export class LogsTableComponent implements OnInit {
     private userService: LoginService,
     private realestateService: RealestatesService,
     private devicesService: DevicesService
-  ) {}
+  ) {
+    this.webSocketAPI = new WebSocketAPI(this,"logs/"+this.userService.user?.id);
+    this.webSocketAPI._connect();
+  }
 
   ngOnInit(): void {
     this.getAllLogs();
@@ -54,6 +60,10 @@ export class LogsTableComponent implements OnInit {
       .subscribe((data) => {
         this.realestates = data;
       });
+  }
+
+  ngOnDestroy(){
+    this.webSocketAPI?._disconnect();
   }
 
   getAllLogs(){
@@ -109,6 +119,10 @@ export class LogsTableComponent implements OnInit {
 
   formatDate(obj:any):string{
     return `${obj.getFullYear()}-${('0'+ (obj.getMonth()+1)).slice(-2)}-${('0'+ obj.getDate()).slice(-2)}`
+  }
+
+  handleMessage(){
+    this.filterLogs();
   }
 
 }

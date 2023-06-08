@@ -38,6 +38,9 @@
       <button mat-menu-item [routerLink]="['user/change-credentials']">
         Promena kredencijala
       </button>
+      <button mat-menu-item [routerLink]="['user/logs']">
+        Logovi uredjaja
+      </button>
     </mat-menu>
 
     
@@ -66,4 +69,5 @@
     Odjava
   </button>
 </mat-toolbar>
-<app-alarm-notification></app-alarm-notification>
+
+<app-alarm-notification *ngIf="userService.user"></app-alarm-notification>

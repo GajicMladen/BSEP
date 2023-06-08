@@ -38,20 +38,24 @@ public class DeviceService {
         newDevice.setDescription(newDeviceDTO.getDeviceDescription());
         newDevice.setDeviceType(newDeviceDTO.getDeviceType());
         if(newDeviceDTO.getDeviceType() == DeviceType.TEMPERATURE){
-            newDevice.setUp_limit(30);
-            newDevice.setDown_limit(16);
+            newDevice.setUpLimit(30);
+            newDevice.setDownLimit(16);
         }else{
-            newDevice.setUp_limit(1);
-            newDevice.setDown_limit(0);
+            newDevice.setUpLimit(1);
+            newDevice.setDownLimit(0);
         }
+        newDevice.setOccurrencesNumber(1);
+        newDevice.setTimeRangeMinutes(5);
         return this.deviceRepository.save(newDevice);
     }
 
     public Device editAlarms(Device newDevice){
         Optional<Device> old = this.deviceRepository.findById(newDevice.getDeviceID());
         if(old.isPresent()){
-            old.get().setUp_limit(newDevice.getUp_limit());
-            old.get().setDown_limit(newDevice.getDown_limit());
+            old.get().setUpLimit(newDevice.getUpLimit());
+            old.get().setDownLimit(newDevice.getDownLimit());
+            old.get().setOccurrencesNumber(newDevice.getOccurrencesNumber());
+            old.get().setTimeRangeMinutes(newDevice.getTimeRangeMinutes());
             return this.deviceRepository.save(old.get());
         }
         return null;

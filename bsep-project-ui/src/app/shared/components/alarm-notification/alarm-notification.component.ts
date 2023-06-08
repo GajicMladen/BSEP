@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { WebSocketAPI } from '../../websocket/web-socket-api';
 import { MessageService, MessageType } from '../../services/message.service';
+import { LoginService } from '../../services/login.service';
+import { LogDTO } from '../../models/LogDTO';
 
 @Component({
   selector: 'app-alarm-notification',
@@ -15,28 +17,23 @@ export class AlarmNotificationComponent implements OnInit {
 
   constructor(
     private messageService:MessageService,
-  ) { }
+    private userService: LoginService
+  ) {
+    this.webSocketAPI = new WebSocketAPI(this,"alarms/"+this.userService.user?.id);
+    this.webSocketAPI._connect();
+   }
 
   ngOnInit() {
+    console.log("napravljen alarm notif component");
     
-    this.webSocketAPI = new WebSocketAPI(this);
-    console.log("povezan");
-    this.connect();
   }
 
-  connect(){
-    this.webSocketAPI!._connect();
-  }
-
-  disconnect(){
-    this.webSocketAPI!._disconnect();
-  }
-
-  sendMessage(){
-    this.webSocketAPI!._send(this.name);
-  }
 
   handleMessage(message:string){
-    this.messageService.showMessage(message,MessageType.WARNING);
+    console.log("dsadsada");
+    let newLog: LogDTO = JSON.parse(JSON.parse(message).body);
+    let messageToShow = `${newLog.house} - ${newLog.exactTime}\n ${newLog.device} \n ${newLog.receivedValue}`
+    this.messageService.showMessage(messageToShow,MessageType.ERROR);
+    console.log(message);
   }
 }

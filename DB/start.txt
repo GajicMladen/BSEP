@@ -1,0 +1,4 @@
+docker run -p 9042:9042 -d --name cassandra cassandra
+
+docker exec -it cassandra cqlsh -u cassandra -p cassandra
+

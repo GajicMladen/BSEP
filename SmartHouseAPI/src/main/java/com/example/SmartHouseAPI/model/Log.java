@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 public class Log{
 
     @PrimaryKeyColumn(name = "house_id",type = PrimaryKeyType.PARTITIONED,ordering = Ordering.ASCENDING)
-    private Long houseID;
+    private Integer houseID;
     @PrimaryKeyColumn(name = "device_id",type = PrimaryKeyType.CLUSTERED,ordering = Ordering.ASCENDING)
-    private Long deviceID;
+    private Integer deviceID;
     @PrimaryKeyColumn(name = "exact_time",type = PrimaryKeyType.CLUSTERED,ordering = Ordering.DESCENDING)
     private LocalDateTime exactTime;
 
@@ -25,7 +25,7 @@ public class Log{
     @Column("is_alarm")
     private boolean isAlarm;
 
-    public Log(Long houseID, Long deviceID, LocalDateTime exactTime, float receivedValue,boolean isAlarm) {
+    public Log(Integer houseID, Integer deviceID, LocalDateTime exactTime, float receivedValue,boolean isAlarm) {
         this.houseID = houseID;
         this.deviceID = deviceID;
         this.exactTime = exactTime;
@@ -41,19 +41,19 @@ public class Log{
         isAlarm = alarm;
     }
 
-    public Long getHouseID() {
+    public Integer getHouseID() {
         return houseID;
     }
 
-    public void setHouseID(Long houseID) {
+    public void setHouseID(Integer houseID) {
         this.houseID = houseID;
     }
 
-    public Long getDeviceID() {
+    public Integer getDeviceID() {
         return deviceID;
     }
 
-    public void setDeviceID(Long deviceID) {
+    public void setDeviceID(Integer deviceID) {
         this.deviceID = deviceID;
     }
 
@@ -71,5 +71,16 @@ public class Log{
 
     public void setReceivedValue(float receivedValue) {
         this.receivedValue = receivedValue;
+    }
+
+    @Override
+    public String toString() {
+        return "Log{" +
+                "houseID=" + houseID +
+                ", deviceID=" + deviceID +
+                ", exactTime=" + exactTime +
+                ", receivedValue=" + receivedValue +
+                ", isAlarm=" + isAlarm +
+                '}';
     }
 }

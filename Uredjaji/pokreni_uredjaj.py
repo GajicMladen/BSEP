@@ -32,7 +32,7 @@ def send_requests(home, device, interval,switch):
         formatted_datetime = current_datetime.strftime('%Y-%m-%dT%H:%M:%S')
         data['exactTime'] = formatted_datetime
         data['receivedValue'] = r
-        send_post_request(data)  # Promenite podatke koji se šalju
+        send_post_request(data) 
         time.sleep(interval)
 
 # Kreiranje parsera argumenata

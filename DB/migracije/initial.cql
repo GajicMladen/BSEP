@@ -21,4 +21,6 @@ INSERT INTO logs(house_id,device_id,exact_time,received_value,is_alarm)
    VALUES (1,2,'2023-05-25 15:05:54',28.2,false);
 INSERT INTO logs(house_id,device_id,exact_time,received_value,is_alarm)
    VALUES (1,2,'2023-05-25 15:05:58',28.2,true);
+INSERT INTO logs(house_id,device_id,exact_time,received_value,is_alarm)
+   VALUES (2,1,'2023-05-25 15:05:58',28.2,true);
 

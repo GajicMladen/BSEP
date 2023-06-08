@@ -3,7 +3,7 @@
 INSERT INTO users(email, name, lastName, password, pin, active, unsuccessful_login_attempts)
 	VALUES ('jtomic1@gmail.com', 'Jovan', 'Tomic', 'Test', '1234', true, 0);
 INSERT INTO users(email, name, lastName, password, pin, active, unsuccessful_login_attempts)
-	VALUES ('p3r5kul45@gmail.com', 'Marko', 'Markovic', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '1028', true, 0);
+	VALUES ('b', 'Marko', 'Markovic', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '1028', true, 0);
 INSERT INTO users(email, name, lastName, password, pin, active, unsuccessful_login_attempts)
 	VALUES ('jtomic@gmail.com', 'Nikola', 'Nikolic', '$2a$10$XeS1WZloSVVq2Z2dJd3L7ePADJy51sWu/oLqcy.Qcmppr6VcUtcr6', '1028', true, 0);
 INSERT INTO users(email, name, lastName, password, pin, active, unsuccessful_login_attempts)
@@ -33,11 +33,11 @@ insert into user_realestates(user_id,realestate_id) values (4,3);
 insert into user_realestates(user_id,realestate_id) values (3,4);
 insert into user_realestates(user_id,realestate_id) values (3,1);
 
-INSERT INTO public.device(description, device_type, read_data, realestate_id,up_limit,down_limit)
-	VALUES ( 'temperatura u dnevnoj sobi', 0, true, 1,30.2, 16.1);
-INSERT INTO public.device(description, device_type, read_data, realestate_id,up_limit,down_limit)
-	VALUES ( 'kamera u dvoristu', 1, true, 1, 1.0 , 0.0);
-INSERT INTO public.device(description, device_type, read_data, realestate_id,up_limit,down_limit)
-	VALUES ( 'ulazna vrata', 2, true, 1 , 1.0 , 0.0);
-INSERT INTO public.device(description, device_type, read_data, realestate_id,up_limit,down_limit)
-	VALUES ( 'temperatura u kuhinji', 0, true, 2 , 33.3 , 16.22);
+INSERT INTO public.device(description, device_type, read_data, realestate_id,up_limit,down_limit,occurrences_number,time_range_minutes)
+	VALUES ( 'temperatura u dnevnoj sobi', 0, true, 1,30.2, 16.1 , 2 , 5 );
+INSERT INTO public.device(description, device_type, read_data, realestate_id,up_limit,down_limit,occurrences_number,time_range_minutes)
+	VALUES ( 'kamera u dvoristu', 1, true, 1, 1.0 , 0.0, 2 , 5);
+INSERT INTO public.device(description, device_type, read_data, realestate_id,up_limit,down_limit,occurrences_number,time_range_minutes)
+	VALUES ( 'ulazna vrata', 2, true, 1 , 1.0 , 0.0, 2 , 5);
+INSERT INTO public.device(description, device_type, read_data, realestate_id,up_limit,down_limit,occurrences_number,time_range_minutes)
+	VALUES ( 'temperatura u kuhinji', 0, true, 2 , 33.3 , 16.22, 2 , 5);
