@@ -39,26 +39,25 @@ public class LoginController {
 	@Autowired
 	private DroolsService droolsService;
 
-	@GetMapping("/drools")
-	public ResponseEntity<?> fireRules() {
-		droolsService.rules();
-		Gson gson = new Gson();
-		return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(new ErrMsg("OK!")));
-	}
-
-	
 	@PostMapping("/login")
 	public ResponseEntity<?> createAuthenticationToken(
 			@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response 
 			){
 		Gson gson = new Gson();
+
+		if (droolsService.checkForLoginViolation(authenticationRequest.getEmail())) {
+			SecurityContextHolder.clearContext();
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body(gson.toJson(new ErrMsg("Trenutno niste u mogućnosti da se prijavite na sistem!")));
+		}
+
 		Authentication authentication;
 		try {
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 		} catch(AuthenticationException e) {
 			if (userService.existsByEmail(authenticationRequest.getEmail()))
 				userService.registerUnsuccessfulLogin(authenticationRequest.getEmail());
-			
+			droolsService.insertAuthenticationRequest(authenticationRequest);
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body(gson.toJson(new ErrMsg("Neispravan e-mail ili lozinka!")));
 		}
@@ -70,6 +69,7 @@ public class LoginController {
         if (!authenticationRequest.getPin().equals(user.getPin())) {
         	userService.registerUnsuccessfulLogin(user.getEmail());
         	SecurityContextHolder.clearContext();
+			droolsService.insertAuthenticationRequest(authenticationRequest);
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body(gson.toJson(new ErrMsg("Neispravan PIN!")));
         }

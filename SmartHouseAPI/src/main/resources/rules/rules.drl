@@ -1,11 +1,16 @@
 package rules
 
+import com.example.SmartHouseAPI.model.FailedLogin;
+import com.example.SmartHouseAPI.model.LoginViolation;
+import java.util.List;
 
-rule "My Rule"
+
+rule "Three Failed Logins"
 when
-    // Condition
-    $message: String()
+    $failedLoginOne: FailedLogin($email: email)
+    $failedLoginTwo: FailedLogin(email == $email, this != $failedLoginOne)
+    $failedLoginThree: FailedLogin(email == $email, this != $failedLoginOne, this != $failedLoginTwo)
+    not LoginViolation(email == $email)
 then
-    // Action
-    System.out.println("Drools rule triggered: " + $message);
+    insert(new LoginViolation($email));
 end
