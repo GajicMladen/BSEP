@@ -1,14 +1,15 @@
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { ComponentType } from '@angular/cdk/portal';
+import { environment } from 'src/environments/environment';
 
 export class WebSocketAPI {
-  webSocketEndPoint: string = 'http://localhost:8080/api/ws';
+  webSocketEndPoint: string = `${environment.baseUrl}/ws`;
   topic: string = '/topic/';
   stompClient: any;
-  appComponent: any ;
+  appComponent: any;
 
-  constructor(appComponent:any,topic: string) {
+  constructor(appComponent: any, topic: string) {
     this.appComponent = appComponent;
     this.topic += topic;
   }

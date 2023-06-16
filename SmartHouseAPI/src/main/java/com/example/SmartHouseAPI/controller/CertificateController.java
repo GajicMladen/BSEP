@@ -1,10 +1,15 @@
 package com.example.SmartHouseAPI.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,25 +24,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.SmartHouseAPI.dto.CsrDTO;
 import com.example.SmartHouseAPI.model.Csr;
 import com.example.SmartHouseAPI.service.CertificateService;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateEncodingException;
-import java.security.cert.X509Certificate;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping(path = "/certificate")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 public class CertificateController {
 	
-	private final CertificateService certificateService;
+	@Autowired
+	private CertificateService certificateService;
 
     @GetMapping
     @RequestMapping(path="/all")

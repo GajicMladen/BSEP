@@ -75,7 +75,13 @@
               "browserTarget": "bsep-project-ui:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options" : {
+            "ssl": true,
+            "sslCert": "localhost.crt",
+            "sslKey": "localhost.decrypted.key",
+            "proxyConfig": "proxy.conf.json"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

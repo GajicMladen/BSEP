@@ -17,7 +17,7 @@ import com.example.SmartHouseAPI.service.UsersService;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 public class UsersController {
 
     @Autowired
