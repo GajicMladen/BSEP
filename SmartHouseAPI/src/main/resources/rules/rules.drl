@@ -1,0 +1,11 @@
+package rules
+
+
+rule "My Rule"
+when
+    // Condition
+    $message: String()
+then
+    // Action
+    System.out.println("Drools rule triggered: " + $message);
+end

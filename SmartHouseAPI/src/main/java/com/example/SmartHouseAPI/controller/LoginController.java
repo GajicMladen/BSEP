@@ -2,6 +2,7 @@ package com.example.SmartHouseAPI.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.SmartHouseAPI.service.DroolsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.SmartHouseAPI.dto.AuthenticationRequest;
 import com.example.SmartHouseAPI.dto.UserTokenState;
@@ -37,6 +35,17 @@ public class LoginController {
 	
 	@Autowired
 	private UsersService userService;
+
+	@Autowired
+	private DroolsService droolsService;
+
+	@GetMapping("/drools")
+	public ResponseEntity<?> fireRules() {
+		droolsService.rules();
+		Gson gson = new Gson();
+		return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(new ErrMsg("OK!")));
+	}
+
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> createAuthenticationToken(
