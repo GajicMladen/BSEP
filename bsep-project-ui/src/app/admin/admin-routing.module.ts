@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CsrListViewComponent } from './components/csr-list-view/csr-list-view.component';
 import { UsersListComponent } from './users/components/users-list/users-list.component';
 import { RegistrationComponent } from '../shared/components/registration/registration.component';
+import { LoginLogsComponent } from './components/login-logs/login-logs.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
     path: 'add-new-user',
     component: RegistrationComponent,
   },
+  {
+    path: 'login-logs',
+    component: LoginLogsComponent
+  }
 ];
 
 @NgModule({
