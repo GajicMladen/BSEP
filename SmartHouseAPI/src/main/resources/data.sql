@@ -44,10 +44,20 @@ INSERT INTO public.device(description, device_type, read_data, realestate_id,up_
 
 --Login Logs
 insert into login_log(email, message, execution_time)
-    values ('djordje@gmail.com', 'Unet je pogrešan email ili lozinka više od tri puta u roku od pola sata.', '2023-06-01 12:34:56.789');
+    values ('djordje@gmail.com', 'Unet je pogrešan email ili lozinka više od tri puta u roku od pola sata.', '2023-05-01 17:34:56.789');
 insert into login_log(email, message, execution_time)
-    values ('djordje@gmail.com', 'Unet je pogrešan PIN više od tri puta u roku od pola sata.', '2023-06-03 12:34:56.789');
+    values ('pajo@gmail.com', 'Unet je pogrešan PIN više od tri puta u roku od pola sata.', '2023-05-03 12:34:56.789');
 insert into login_log(email, message, execution_time)
-    values ('djordje@gmail.com', 'Unet je pogrešan email ili lozinka više od tri puta u roku od pola sata.', '2023-06-06 12:34:56.789');
+    values ('mika@gmail.com', 'Unet je pogrešan email ili lozinka više od tri puta u roku od pola sata.', '2023-05-03 15:34:56.789');
 insert into login_log(email, message, execution_time)
-    values ('djordje@gmail.com', 'Unet je pogrešan PIN više od tri puta u roku od pola sata.', '2023-06-11 12:34:56.789');
+    values ('djordje@gmail.com', 'Unet je pogrešan PIN više od tri puta u roku od pola sata.', '2023-05-11 12:34:56.789');
+insert into login_log(email, message, execution_time)
+    values ('marina@gmail.com', 'Unet je pogrešan PIN više od tri puta u roku od pola sata.', '2023-05-17 08:34:56.789');
+insert into login_log(email, message, execution_time)
+    values ('pera@gmail.com', 'Unet je pogrešan email ili lozinka više od tri puta u roku od pola sata.', '2023-05-23 12:34:56.789');
+insert into login_log(email, message, execution_time)
+    values ('djordje@gmail.com', 'Unet je pogrešan PIN više od tri puta u roku od pola sata.', '2023-06-01 12:34:56.789');
+insert into login_log(email, message, execution_time)
+    values ('marina@gmail.com', 'Unet je pogrešan email ili lozinka više od tri puta u roku od pola sata.', '2023-06-11 12:34:56.789');
+insert into login_log(email, message, execution_time)
+    values ('mika@gmail.com', 'Unet je pogrešan PIN više od tri puta u roku od pola sata.', '2023-06-17 21:14:56.789');

@@ -11,9 +11,10 @@ import { UsersListComponent } from './users/components/users-list/users-list.com
 import { UserProfileComponent } from './users/components/user-profile/user-profile.component';
 import { RealestateListComponent } from './realesates/components/realestate-list/realestate-list.component';
 import { RealestateItemComponent } from './realesates/components/realestate-item/realestate-item.component';
+import { LoginLogsComponent } from './components/login-logs/login-logs.component';
 
 @NgModule({
-  declarations: [CsrListViewComponent, CsrItemComponent, CertificateItemComponent, UsersListComponent, UserProfileComponent, RealestateListComponent, RealestateItemComponent],
+  declarations: [CsrListViewComponent, CsrItemComponent, CertificateItemComponent, UsersListComponent, UserProfileComponent, RealestateListComponent, RealestateItemComponent, LoginLogsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
