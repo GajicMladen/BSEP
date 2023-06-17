@@ -2,15 +2,82 @@ package rules
 
 import com.example.SmartHouseAPI.model.FailedLogin;
 import com.example.SmartHouseAPI.model.LoginViolation;
+import com.example.SmartHouseAPI.enums.FailedLoginType;
 import java.util.List;
 
 
-rule "Three Failed Logins"
+rule "Three Failed Logins for wrong email or password"
 when
-    $failedLoginOne: FailedLogin($email: email)
-    $failedLoginTwo: FailedLogin(email == $email, this != $failedLoginOne)
-    $failedLoginThree: FailedLogin(email == $email, this != $failedLoginOne, this != $failedLoginTwo)
-    not LoginViolation(email == $email)
+    $failedLoginOne: FailedLogin($email: email, $type: failedLoginType, failedLoginType == FailedLoginType.EMAIL_PASSWORD)
+    $failedLoginTwo: FailedLogin(email == $email, this != $failedLoginOne, failedLoginType == $type)
+    $failedLoginThree: FailedLogin(email == $email, this != $failedLoginOne, this != $failedLoginTwo, failedLoginType == $type)
+    not LoginViolation(email == $email, failedLoginType == $type)
 then
-    insert(new LoginViolation($email));
+    insert(new LoginViolation($email, $type));
+end
+
+
+rule "Three Failed Logins for wrong PIN"
+when
+    $failedLoginOne: FailedLogin($email: email, $type: failedLoginType, failedLoginType == FailedLoginType.PIN)
+    $failedLoginTwo: FailedLogin(email == $email, this != $failedLoginOne, failedLoginType == $type)
+    $failedLoginThree: FailedLogin(email == $email, this != $failedLoginOne, this != $failedLoginTwo, failedLoginType == $type)
+    not LoginViolation(email == $email, failedLoginType == $type)
+then
+    insert(new LoginViolation($email, $type));
+end
+
+
+rule "Three Failed Logins from inactive account"
+when
+    $failedLoginOne: FailedLogin($email: email, $type: failedLoginType, failedLoginType == FailedLoginType.INACTIVE)
+    $failedLoginTwo: FailedLogin(email == $email, this != $failedLoginOne, failedLoginType == $type)
+    $failedLoginThree: FailedLogin(email == $email, this != $failedLoginOne, this != $failedLoginTwo, failedLoginType == $type)
+    not LoginViolation(email == $email, failedLoginType == $type)
+then
+    insert(new LoginViolation($email, $type));
+end
+
+
+rule "Login Violation for wrong email or password"
+when
+    $loginViolation: LoginViolation(failedLoginType == FailedLoginType.EMAIL_PASSWORD)
+then
+    //Upisi ga u bazu
+end
+
+
+rule "Login Violation for wrong PIN"
+when
+    $loginViolation: LoginViolation(failedLoginType == FailedLoginType.PIN)
+then
+    //Upisi ga u bazu
+end
+
+
+rule "Login Violation from inactive account"
+when
+    $loginViolation: LoginViolation(failedLoginType == FailedLoginType.INACTIVE)
+then
+    //Upisi ga u bazu
+end
+
+
+rule "Login Violation"
+when
+    $loginViolation: LoginViolation()
+then
+    System.out.println($loginViolation.getEmail());
+    System.out.println($loginViolation.getFailedLoginType());
+    System.out.println($loginViolation.getExecutionTime());
+end
+
+
+rule "Failed Login"
+when
+    $failedLogin: FailedLogin()
+then
+    System.out.println($failedLogin.getEmail());
+    System.out.println($failedLogin.getFailedLoginType());
+    System.out.println($failedLogin.getExecutionTime());
 end

@@ -1,6 +1,7 @@
 package com.example.SmartHouseAPI.service;
 
 import com.example.SmartHouseAPI.dto.AuthenticationRequest;
+import com.example.SmartHouseAPI.enums.FailedLoginType;
 import com.example.SmartHouseAPI.model.FailedLogin;
 import com.example.SmartHouseAPI.model.LoginViolation;
 import org.kie.api.KieServices;
@@ -24,8 +25,10 @@ public class DroolsService implements InitializingBean, DisposableBean {
         kieSession = kc.newKieSession("rules");
     }
 
-    public void insertAuthenticationRequest(AuthenticationRequest authenticationRequest) {
-        kieSession.insert(new FailedLogin(authenticationRequest));
+    public void insertFailedLogin(AuthenticationRequest authenticationRequest, FailedLoginType type) {
+        FailedLogin failedLogin = new FailedLogin(authenticationRequest);
+        failedLogin.setFailedLoginType(type);
+        kieSession.insert(failedLogin);
         kieSession.fireAllRules();
     }
 

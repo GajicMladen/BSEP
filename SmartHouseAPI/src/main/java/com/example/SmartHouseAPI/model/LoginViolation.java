@@ -1,6 +1,7 @@
 package com.example.SmartHouseAPI.model;
 
 
+import com.example.SmartHouseAPI.enums.FailedLoginType;
 import org.kie.api.definition.type.Expires;
 import org.kie.api.definition.type.Role;
 import org.kie.api.definition.type.Timestamp;
@@ -15,6 +16,8 @@ public class LoginViolation {
     private String email;
 
     private Date executionTime;
+
+    private FailedLoginType failedLoginType;
 
     public LoginViolation(String email) {
         this.email = email;
@@ -35,5 +38,13 @@ public class LoginViolation {
 
     public void setExecutionTime(Date executionTime) {
         this.executionTime = executionTime;
+    }
+
+    public FailedLoginType getFailedLoginType() {
+        return failedLoginType;
+    }
+
+    public void setFailedLoginType(FailedLoginType failedLoginType) {
+        this.failedLoginType = failedLoginType;
     }
 }

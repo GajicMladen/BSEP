@@ -1,6 +1,7 @@
 package com.example.SmartHouseAPI.model;
 
 import com.example.SmartHouseAPI.dto.AuthenticationRequest;
+import com.example.SmartHouseAPI.enums.FailedLoginType;
 import org.kie.api.definition.type.Expires;
 import org.kie.api.definition.type.Role;
 import org.kie.api.definition.type.Timestamp;
@@ -15,16 +16,11 @@ public class FailedLogin {
     private String email;
 
     private Date executionTime;
-
-    private String password;
-
-    private String pin;
+    private FailedLoginType failedLoginType;
 
     public FailedLogin(AuthenticationRequest authenticationRequest) {
         this.email = authenticationRequest.getEmail();
         this.executionTime = new Date();
-        this.password = authenticationRequest.getPassword();
-        this.pin = authenticationRequest.getPin();
     }
 
     public String getEmail() {
@@ -43,19 +39,11 @@ public class FailedLogin {
         this.executionTime = executionTime;
     }
 
-    public String getPassword() {
-        return password;
+    public FailedLoginType getFailedLoginType() {
+        return failedLoginType;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPin() {
-        return pin;
-    }
-
-    public void setPin(String pin) {
-        this.pin = pin;
+    public void setFailedLoginType(FailedLoginType failedLoginType) {
+        this.failedLoginType = failedLoginType;
     }
 }
