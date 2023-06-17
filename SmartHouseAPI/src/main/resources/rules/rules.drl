@@ -3,8 +3,10 @@ package rules
 import com.example.SmartHouseAPI.model.FailedLogin;
 import com.example.SmartHouseAPI.model.LoginViolation;
 import com.example.SmartHouseAPI.enums.FailedLoginType;
+import com.example.SmartHouseAPI.service.DroolsService;
 import java.util.List;
 
+global DroolsService droolsService;
 
 rule "Three Failed Logins for wrong email or password"
 when
@@ -43,7 +45,7 @@ rule "Login Violation for wrong email or password"
 when
     $loginViolation: LoginViolation(failedLoginType == FailedLoginType.EMAIL_PASSWORD)
 then
-    //Upisi ga u bazu
+    droolsService.saveLoginLog($loginViolation);
 end
 
 
@@ -51,7 +53,7 @@ rule "Login Violation for wrong PIN"
 when
     $loginViolation: LoginViolation(failedLoginType == FailedLoginType.PIN)
 then
-    //Upisi ga u bazu
+    droolsService.saveLoginLog($loginViolation);
 end
 
 
@@ -59,7 +61,7 @@ rule "Login Violation from inactive account"
 when
     $loginViolation: LoginViolation(failedLoginType == FailedLoginType.INACTIVE)
 then
-    //Upisi ga u bazu
+    droolsService.saveLoginLog($loginViolation);
 end
 
 

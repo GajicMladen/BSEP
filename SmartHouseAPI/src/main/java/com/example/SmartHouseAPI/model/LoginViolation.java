@@ -19,9 +19,10 @@ public class LoginViolation {
 
     private FailedLoginType failedLoginType;
 
-    public LoginViolation(String email) {
+    public LoginViolation(String email, FailedLoginType failedLoginType) {
         this.email = email;
         this.executionTime = new Date();
+        this.failedLoginType = failedLoginType;
     }
 
     public String getEmail() {

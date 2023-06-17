@@ -21,12 +21,7 @@ public class LoginLog {
     @Column(name = "execution_time", nullable = false)
     private Date executionTime;
 
-    public LoginLog() { }
-
-    public LoginLog(String email, String message) {
-        this.email = email;
-        this.message = message;
-        this.executionTime = new Date();
+    public LoginLog() {
     }
 
     public Long getId() {

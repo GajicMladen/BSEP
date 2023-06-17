@@ -41,3 +41,13 @@ INSERT INTO public.device(description, device_type, read_data, realestate_id,up_
 	VALUES ( 'ulazna vrata', 2, true, 1 , 1.0 , 0.0, 2 , 5);
 INSERT INTO public.device(description, device_type, read_data, realestate_id,up_limit,down_limit,occurrences_number,time_range_minutes)
 	VALUES ( 'temperatura u kuhinji', 0, true, 2 , 33.3 , 16.22, 2 , 5);
+
+--Login Logs
+insert into login_log(email, message, execution_time)
+    values ('djordje@gmail.com', 'Unet je pogrešan email ili lozinka više od tri puta u roku od pola sata.', '2023-06-01 12:34:56.789');
+insert into login_log(email, message, execution_time)
+    values ('djordje@gmail.com', 'Unet je pogrešan PIN više od tri puta u roku od pola sata.', '2023-06-03 12:34:56.789');
+insert into login_log(email, message, execution_time)
+    values ('djordje@gmail.com', 'Unet je pogrešan email ili lozinka više od tri puta u roku od pola sata.', '2023-06-06 12:34:56.789');
+insert into login_log(email, message, execution_time)
+    values ('djordje@gmail.com', 'Unet je pogrešan PIN više od tri puta u roku od pola sata.', '2023-06-11 12:34:56.789');
