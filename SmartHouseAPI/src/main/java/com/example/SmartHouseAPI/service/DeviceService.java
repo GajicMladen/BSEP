@@ -31,6 +31,12 @@ public class DeviceService {
         return this.deviceRepository.save(device);
     }
 
+    public boolean isReadDataForDevice(Integer deviceID){
+
+        Optional<Device> device = this.deviceRepository.findById(deviceID.longValue());
+        return device.map(Device::isReadData).orElse(false);
+    }
+
     public Device addNewDevice(NewDeviceDTO newDeviceDTO, Realestate realestate){
         Device newDevice = new Device();
         newDevice.setRealestate(realestate);

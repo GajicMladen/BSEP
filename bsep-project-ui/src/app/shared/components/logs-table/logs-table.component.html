@@ -28,10 +28,13 @@
     <mat-date-range-picker #picker></mat-date-range-picker>
   
   </mat-form-field>
+  
+    <mat-slide-toggle [checked]="onlyAlarms" (change)="filterLogsAlarm()">Samo alarmi</mat-slide-toggle>
+  
 </form>
 
-
-<table mat-table [dataSource]="logs">
+<button mat-raised-button color="primary" (click)="downloadAsPDF()" class="bt-dwnl"> <mat-icon>download</mat-icon> <mat-icon>document_scanner</mat-icon></button>
+<table mat-table [dataSource]="logs" >
     <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
   <!-- Name Column -->
@@ -56,10 +59,10 @@
   <ng-container matColumnDef="receivedValue">
     <th mat-header-cell *matHeaderCellDef> Vrednost </th>
     <td mat-cell *matCellDef="let element" >
-       <div [ngClass]="{alarm:element.alarm}">
+        <div [ngClass]="{alarm:element.alarm}">
         {{element.receivedValue}}
       </div>
-   </td>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

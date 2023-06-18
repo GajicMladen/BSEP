@@ -1,3 +1,8 @@
-<div>
-    
+<div *ngIf="objectKeys(alarms).length >= 1 " class="modal">
+    <div *ngFor="let alarm of objectKeys(alarms)">
+        <div class="single-alarm">
+            {{alarm}}
+            <span (click)="deleteAlarm(alarm)" style="cursor: pointer;"><b>X</b></span>
+        </div>
+    </div>
 </div>

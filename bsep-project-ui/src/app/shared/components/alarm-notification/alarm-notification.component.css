@@ -1,0 +1,24 @@
+.modal{
+    position: fixed;
+    background-color: #1c1c1c8a;
+    width: 100%;
+    padding: 25px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    gap:20px;
+}
+
+.single-alarm{
+    background-color: red;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    padding: 19px;
+    border-radius: 10px;
+    width: 55%;
+}

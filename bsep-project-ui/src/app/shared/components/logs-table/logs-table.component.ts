@@ -1,4 +1,4 @@
-import { Component, OnInit , OnDestroy } from '@angular/core';
+import { Component, OnInit , OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { LogDTO } from '../../models/LogDTO';
 import { LogsService } from '../../services/logs.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -10,6 +10,9 @@ import { DevicesService } from '../../services/devices.service';
 import { LogSearchDTO } from '../../models/LogSearchDTO';
 import { JsonPipe } from '@angular/common';
 import { WebSocketAPI } from '../../websocket/web-socket-api';
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+import { reduce } from 'rxjs';
 
 @Component({
   selector: 'app-logs-table',
@@ -22,7 +25,7 @@ export class LogsTableComponent implements OnInit,OnDestroy {
   devices: Device[] = [];
   
   webSocketAPI: WebSocketAPI | undefined;
-  
+  onlyAlarms = false;
   form = new FormGroup({
     realestate: new FormControl(),
     device: new FormControl(),
@@ -89,10 +92,12 @@ export class LogsTableComponent implements OnInit,OnDestroy {
       realestateID: 0,
       deviceID: 0,
       startDate: null,
-      endDate: null
+      endDate: null,
+      onlyAlarms: false
     };
     logSearchDTO!.realestateID = this.form.get('realestate')?.value;
     logSearchDTO!.deviceID = this.form.get('device')?.value;
+    logSearchDTO.onlyAlarms = this.onlyAlarms;
     let dateRange = this.getDateRange().value;
     try{
       logSearchDTO!.startDate = this.formatDate(dateRange['start'])+" 00:00";
@@ -116,6 +121,10 @@ export class LogsTableComponent implements OnInit,OnDestroy {
 
   }
   
+  filterLogsAlarm(){
+      this.onlyAlarms = !this.onlyAlarms;
+      this.filterLogs();
+  }
 
   formatDate(obj:any):string{
     return `${obj.getFullYear()}-${('0'+ (obj.getMonth()+1)).slice(-2)}-${('0'+ obj.getDate()).slice(-2)}`
@@ -125,4 +134,24 @@ export class LogsTableComponent implements OnInit,OnDestroy {
     this.filterLogs();
   }
 
+  @ViewChild('pdfTable', {static: false}) pdfTable!: ElementRef;
+
+
+  public downloadAsPDF() {
+    const doc = new jsPDF('l', 'mm', 'a4'); 
+    
+    const head = [['HOuse', 'Device', 'exact time', 'received value']]
+    const data:any[] = [];
+    this.logs.forEach(x => {
+      data.push( [x.house, x.device, x.exactTime  ,x.receivedValue]);
+    })
+
+    autoTable(doc, {
+        head: head,
+        body: data,
+        didDrawCell: (data) => { },
+    });
+
+    doc.save('table.pdf');
+  }
 }

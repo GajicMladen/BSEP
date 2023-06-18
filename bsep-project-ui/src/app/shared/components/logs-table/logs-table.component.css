@@ -12,3 +12,7 @@ form{
     align-items: center;
     justify-content: center;
 }
+.bt-dwnl{
+    position: absolute;
+    right: 10px;
+}

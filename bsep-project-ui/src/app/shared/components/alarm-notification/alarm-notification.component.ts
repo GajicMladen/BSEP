@@ -14,6 +14,12 @@ export class AlarmNotificationComponent implements OnInit {
   webSocketAPI: WebSocketAPI | undefined;
   greeting: any;
   name: string = "Mladens";
+  
+  alarmID : number = 0; 
+  objectKeys = Object.keys;
+  alarms :{ [id: string]: boolean; } = {
+
+  };
 
   constructor(
     private messageService:MessageService,
@@ -24,16 +30,18 @@ export class AlarmNotificationComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log("napravljen alarm notif component");
     
   }
 
 
   handleMessage(message:string){
-    console.log("dsadsada");
     let newLog: LogDTO = JSON.parse(JSON.parse(message).body);
     let messageToShow = `${newLog.house} - ${newLog.exactTime}\n ${newLog.device} \n ${newLog.receivedValue}`
-    this.messageService.showMessage(messageToShow,MessageType.ERROR);
-    console.log(message);
+    // this.messageService.showMessage(messageToShow,MessageType.ERROR);
+    this.alarms[messageToShow] = false;
+  }
+
+  deleteAlarm(alarm:string){
+    delete this.alarms[alarm];  
   }
 }

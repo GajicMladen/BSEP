@@ -4,15 +4,31 @@ import argparse
 import random
 import datetime
 import yaml
+import os
+import base64
+from cryptography.hazmat.primitives import padding
+from cryptography.fernet import Fernet
 
-url = "http://localhost:8080/api/logs/addNew"
+# Key for symmetric encryption (replace with your own secure key)
+encryption_key = b'zZMFXqSbLrWvHaMzvF6zlQRTtg9bXuHMKwsX2MlYnIc='
 
+url = "https://localhost:8443/api/logs/addNew"
+
+def pad_data(data):
+    padder = padding.PKCS7(128).padder()
+    padded_data = padder.update(data.encode()) + padder.finalize()
+    return padded_data
+
+def encrypt_data(data):
+    data_str = str(data)
+    f = Fernet(encryption_key)
+    encrypted_data = f.encrypt(data_str.encode())
+    return encrypted_data
 
 def send_post_request(data):
-    print(data)
-    response = requests.post(url, json=data)
+    encrypted_data = encrypt_data(data)
+    response = requests.post(url, data=encrypted_data, verify=False)
     print("Status code:", response.status_code)
-
 
 def send_requests(home, device, interval,switch):
     data = {
@@ -37,10 +53,6 @@ def send_requests(home, device, interval,switch):
 
 # Kreiranje parsera argumenata
 parser = argparse.ArgumentParser(description='HTTP POST zahtevi skripta')
-# parser.add_argument('home', type=str, help='Kuca za koju se salje')
-# parser.add_argument('device', type=str, help='Uredjaj koji salje')
-# parser.add_argument('interval', type=int, help='Vremenski interval između zahteva (u sekundama)')
-# parser.add_argument('onof', type=int, help='Vrednost ili true/false')
 parser.add_argument('device', type=str, help='Uredjaj')
 
 # Parsiranje argumenata sa komandne linije
@@ -52,7 +64,10 @@ with open("./konfiguracije/uredjaj_"+args.device+".yml", "r") as f:
 
 # Prikazivanje učitanih podataka
 device = yml_data["uredjaj"]
-# print(device)
+
+# key = Fernet.generate_key()
+# print(key)
+# print()
 
 # Pozivanje funkcije za slanje zahteva sa unetim vrednostima
 send_requests(device['home'],device['device'], device['interval'],device['onof'])

@@ -9,6 +9,13 @@ import com.example.SmartHouseAPI.model.Realestate;
 import com.example.SmartHouseAPI.repository.DeviceRepository;
 import com.example.SmartHouseAPI.repository.LogsRepository;
 import com.example.SmartHouseAPI.repository.RealestateRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.macasaet.fernet.Key;
+import com.macasaet.fernet.StringValidator;
+import com.macasaet.fernet.Token;
+import com.macasaet.fernet.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,8 +92,26 @@ public class LogsService {
         if( logsSerachDTO.getDeviceID() != null){
             logs = logs.stream().filter( log ->  log.getDeviceID().toString().equals(logsSerachDTO.getDeviceID().toString()) ).collect(Collectors.toList());
         }
+        if(logsSerachDTO.isOnlyAlarms()){
+            logs = logs.stream().filter(Log::isAlarm).collect(Collectors.toList());
+        }
         return makeDTOs(logs);
     }
+
+    public LogDTO decryptLogDTO(String encryptedMessage) throws JsonProcessingException {
+        final Key key = new Key("zZMFXqSbLrWvHaMzvF6zlQRTtg9bXuHMKwsX2MlYnIc=");
+        final Token tokenMessage = Token.fromString(encryptedMessage);
+        final Validator<String> validator = new StringValidator() {
+        };
+        final String message = tokenMessage.validateAndDecrypt(key, validator);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
+        // Deserialize the decrypted string into a LogDTO object;'
+        LogDTO logDTO = objectMapper.readValue(message.replaceAll("'", "\""), LogDTO.class);
+        return logDTO;
+    }
+
 
     public LogSendDTO makeDTO(Log log){
         Realestate r = this.realestateRepository.getById(log.getHouseID().longValue());

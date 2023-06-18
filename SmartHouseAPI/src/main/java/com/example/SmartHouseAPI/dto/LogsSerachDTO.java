@@ -8,14 +8,17 @@ public class LogsSerachDTO {
     private String startDate;
     private String endDate;
 
+    private boolean onlyAlarms;
+
     public LogsSerachDTO() {
     }
 
-    public LogsSerachDTO(Integer realestateID, Integer deviceID, String startDate, String endDate) {
+    public LogsSerachDTO(Integer realestateID, Integer deviceID, String startDate, String endDate,boolean  onlyAlarms) {
         this.realestateID = realestateID;
         this.deviceID = deviceID;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.onlyAlarms = onlyAlarms;
     }
 
     public Integer getRealestateID() {
@@ -48,5 +51,13 @@ public class LogsSerachDTO {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean isOnlyAlarms() {
+        return onlyAlarms;
+    }
+
+    public void setOnlyAlarms(boolean onlyAlarms) {
+        this.onlyAlarms = onlyAlarms;
     }
 }

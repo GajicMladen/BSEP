@@ -30,6 +30,6 @@
         <fa-icon [icon]="faCog" class="device-alarms fa-2x" 
         matTooltip="Podesavanja alarma uredjaja" (click)="openAlarmSettings()"></fa-icon>
         <fa-icon [icon]="faList" class="device-logs fa-2x"
-        matTooltip="Logovi uredjaja"></fa-icon>
+        matTooltip="Logovi uredjaja" [routerLink]="'/owner/logs'"></fa-icon>
     </div>
 </mat-card>

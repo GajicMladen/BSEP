@@ -4,7 +4,7 @@
             <fa-icon [icon]="faHome" class="fa-2x" ></fa-icon>
             {{r.address}}
             <fa-icon [icon]="faListAlt" class="fa-2x all-logs"
-            matTooltip="Svi logovi"></fa-icon>
+            matTooltip="Svi logovi" [routerLink]="'/owner/logs'" style="cursor: pointer;"></fa-icon>
         </div>
         <div class="devices">
             <app-device *ngFor="let device of devices[r.id]" [device]="device" ></app-device>

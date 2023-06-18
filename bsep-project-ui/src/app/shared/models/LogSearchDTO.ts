@@ -3,5 +3,5 @@ export interface LogSearchDTO{
     deviceID :number ,
     startDate :string | null,
     endDate :string | null,
-    
+    onlyAlarms : boolean,
 }
