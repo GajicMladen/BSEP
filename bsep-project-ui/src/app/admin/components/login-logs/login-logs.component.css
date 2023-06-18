@@ -1,0 +1,42 @@
+.main-container {
+    display: flex;
+    justify-content: center;
+}
+
+.main-card {
+    margin-top: 25px;
+    width: 75%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.demo-table {
+    width: 100%;
+}
+
+.demo-table th {
+    background-color: rgb(209, 209, 209);
+}
+
+.column1-header,
+.column1-cell {
+  width: 10%;
+}
+
+.column2-header,
+.column2-cell {
+    width: 20%;
+}
+
+.column3-header,
+.column3-cell {
+    width: 25%;
+}
+
+.column4-header,
+.column4-cell {
+    width: 45%;
+}

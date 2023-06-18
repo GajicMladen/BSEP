@@ -2,9 +2,11 @@ package com.example.SmartHouseAPI.controller;
 
 import com.example.SmartHouseAPI.dto.LogDTO;
 import com.example.SmartHouseAPI.dto.LogSendDTO;
+import com.example.SmartHouseAPI.dto.LoginLogDTO;
 import com.example.SmartHouseAPI.dto.LogsSerachDTO;
 import com.example.SmartHouseAPI.model.Log;
 import com.example.SmartHouseAPI.service.DeviceService;
+import com.example.SmartHouseAPI.service.DroolsService;
 import com.example.SmartHouseAPI.service.LogsService;
 import com.example.SmartHouseAPI.service.SocketService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +15,9 @@ import com.macasaet.fernet.Key;
 import com.macasaet.fernet.StringValidator;
 import com.macasaet.fernet.Token;
 import com.macasaet.fernet.Validator;
+import org.drools.core.util.Drools;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.util.StreamUtils;
@@ -37,6 +41,9 @@ public class LogsController {
 
     @Autowired
     private LogsService logsService;
+
+    @Autowired
+    private DroolsService droolsService;
 
     @Autowired
     private SocketService socketService;
@@ -71,5 +78,11 @@ public class LogsController {
     public ResponseEntity<?> serachLogs(@RequestBody LogsSerachDTO logsSerachDTO){
         List<LogSendDTO> ret = this.logsService.searchLogs(logsSerachDTO);
         return ResponseEntity.ok(ret);
+    }
+
+    @GetMapping(value = "/login")
+    public ResponseEntity<?> getLoginLogs() {
+        List<LoginLogDTO> logs = droolsService.getAll();
+        return ResponseEntity.status(HttpStatus.OK).body(logs);
     }
 }
